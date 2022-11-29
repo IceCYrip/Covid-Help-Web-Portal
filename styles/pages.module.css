@@ -1,0 +1,40 @@
+.main {
+  display: flex;
+}
+
+.rightSide {
+  position: relative;
+  width: 75vw;
+  height: 93vh;
+  background-color: whitesmoke;
+
+  border-radius: 50px;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Content {
+  margin-top: 5vh;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.TitleText {
+  text-align: center;
+  margin-bottom: 6vh;
+}
+
+.Button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}

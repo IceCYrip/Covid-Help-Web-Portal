@@ -1,0 +1,35 @@
+{
+  "name": "chwp2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "set PORT=4500 && next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@hookform/resolvers": "^2.9.10",
+    "@mui/icons-material": "^5.10.3",
+    "@mui/material": "^5.10.15",
+    "@mui/x-data-grid": "^5.17.13",
+    "@reduxjs/toolkit": "^1.9.0",
+    "axios": "^1.2.0",
+    "mongoose": "^6.7.3",
+    "next": "13.0.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.39.5",
+    "react-redux": "^8.0.5",
+    "react-top-loading-bar": "^2.3.1",
+    "redux-persist": "^6.0.0",
+    "sweetalert": "^2.1.2",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "eslint": "8.28.0",
+    "eslint-config-next": "13.0.5"
+  }
+}

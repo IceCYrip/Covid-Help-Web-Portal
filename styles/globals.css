@@ -1,0 +1,18 @@
+html,
+body {
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  padding-right: 0.5vw;
+  padding-left: 0.5vw;
+  background-color: rgb(250, 107, 107);
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
