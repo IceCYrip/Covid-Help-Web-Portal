@@ -10,7 +10,7 @@ npm run dev
 yarn dev
 ```
 
-![alt text](https://github.com/IceCYrip/Covid-Help-Web-Portal/public/readme/login.jpg?raw=true)
+![alt text](https://github.com/IceCYrip/Covid-Help-Web-Portal/public/readme/login.jpg)
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
