@@ -14,7 +14,6 @@ import styles from '../../styles/pages.module.css'
 import Loader from '../../components/Loader'
 
 const index = () => {
-  const [userData, setUserData] = useState({})
   const [Loading, setLoading] = useState(true)
   const [runAgain, setRunAgain] = useState(false)
   const user = useSelector((state) => state.user.user)
@@ -131,7 +130,7 @@ const index = () => {
                   sx={{ width: 300 }}
                   label="Full Name"
                   variant="standard"
-                  InputLabelProps={{ shrink: true }}
+                  InputLabelProps={{ shrink: !Loading }}
                   {...register('fullName')}
                   error={!!errors.fullName}
                   helperText={errors?.fullName && errors.fullName.message}
@@ -140,7 +139,7 @@ const index = () => {
                   sx={{ width: 300 }}
                   label="Contact"
                   variant="standard"
-                  InputLabelProps={{ shrink: true }}
+                  InputLabelProps={{ shrink: !Loading }}
                   {...register('contact')}
                   error={!!errors.contact}
                   helperText={errors?.contact && errors.contact.message}
@@ -151,7 +150,7 @@ const index = () => {
                   sx={{ width: 300 }}
                   label="Address"
                   variant="standard"
-                  InputLabelProps={{ shrink: true }}
+                  InputLabelProps={{ shrink: !Loading }}
                   {...register('address')}
                   error={!!errors.address}
                   helperText={errors?.address && errors.address.message}
@@ -160,7 +159,7 @@ const index = () => {
                   sx={{ width: 300 }}
                   label="Pincode"
                   variant="standard"
-                  InputLabelProps={{ shrink: true }}
+                  InputLabelProps={{ shrink: !Loading }}
                   {...register('pincode')}
                   error={!!errors.pincode}
                   helperText={errors?.pincode && errors.pincode.message}
@@ -172,7 +171,7 @@ const index = () => {
                   sx={{ width: 300 }}
                   label="Area"
                   variant="standard"
-                  InputLabelProps={{ shrink: true }}
+                  InputLabelProps={{ shrink: !Loading }}
                   {...register('area')}
                   error={!!errors.address}
                   helperText={errors?.address && errors.address.message}
@@ -182,7 +181,7 @@ const index = () => {
                   label="Username"
                   variant="standard"
                   disabled
-                  InputLabelProps={{ shrink: true }}
+                  InputLabelProps={{ shrink: !Loading }}
                   {...register('uname')}
                 />
               </div>

@@ -1,21 +1,38 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import router from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import SideBar from '../components/SideBar'
 import styles from '../styles/pages.module.css'
 import { DataGrid } from '@mui/x-data-grid'
 import { Button } from '@mui/material'
+import Loader from '../components/Loader'
+
 import axios from 'axios'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
+  const [table, setTable] = useState([])
+  const [Loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!user.isLoggedIn) {
       router.push('/login')
     }
+
+    axios.get('http://localhost:4500/api/doctor/getAll').then((res) => {
+      setTable(
+        res.data.map((response, index) => ({
+          srNo: index + 1,
+          id: response._id,
+          doctorName: response.fullName,
+          area: response.area,
+          contact: response.contact,
+        }))
+      )
+      setLoading(false)
+    })
   }, [])
 
   const rows = [
@@ -142,6 +159,7 @@ export default function Home() {
       <div className={styles.main}>
         <SideBar />
         <div className={styles.rightSide}>
+          {Loading && <Loader />}
           <div className={styles.Content}>
             <h2 className={styles.TitleText}>
               Below are the COVID helpline numbers of the doctors on call.
@@ -157,7 +175,7 @@ export default function Home() {
               hideFooter
               disableSelectionOnClick
               disableColumnMenu
-              rows={rows}
+              rows={table}
               columns={
                 user.user.userType == 'admin' ? admincolumns : normalColumns
               }

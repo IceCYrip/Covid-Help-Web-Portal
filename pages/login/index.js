@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import styles from '../../styles/login.module.css'
 import { login } from '../../redux/slices/UserSlice'
 import Head from 'next/head'
@@ -11,9 +11,11 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { router } from 'next/router'
 import axios from 'axios'
+import loaderSvg from '../../public/loginLoader.svg'
 
 const Index = () => {
   const dispatch = useDispatch()
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
 
   const schema = yup.object().shape({
     uname: yup.string().required('Please enter a username.'),
@@ -30,31 +32,14 @@ const Index = () => {
     resolver: yupResolver(schema),
   })
 
-  const user = {
-    name: 'Karan Sable',
-    address: '6A-902, Narmada Building, Mhada Society, Morewadi, Pimpri',
-    pincode: 411018,
-    mobile: 9890822495,
-
-    uname: 'karansable16@gmail.com',
-    userType: 'customer',
-    // userType: 'supplier',
-    // userType: 'admin',
-  }
-
   const finish = (data) => {
+    setIsLoggingIn(true)
     axios.post('http://localhost:4500/api/auth/login', data).then((res) => {
       if (res.status === 200) {
-        console.log('Response from backend: ', res.data)
         dispatch(login(res.data))
         router.push('/')
       }
     })
-
-    // if (data.uname === 'karansable16@gmail.com' && data.pwd === 'Karan@123') {
-    //   dispatch(login(user))
-    //   router.push('/')
-    // }
   }
 
   return (
@@ -90,14 +75,33 @@ const Index = () => {
                 helperText={errors?.pwd && errors.pwd.message}
               />
 
-              <Button
-                variant="contained"
-                color="error"
-                sx={{ backgroundColor: '#F92303' }}
-                type="submit"
-              >
-                Login
-              </Button>
+              {!isLoggingIn ? (
+                <Button
+                  variant="contained"
+                  color="error"
+                  sx={{ backgroundColor: '#F92303' }}
+                  type="submit"
+                >
+                  Login
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="error"
+                  sx={{ backgroundColor: '#F92303' }}
+                  type="submit"
+                >
+                  Login
+                  <Image
+                    style={{ marginLeft: 10 }}
+                    src={loaderSvg}
+                    height={30}
+                    width={30}
+                    alt="loader"
+                    priority
+                  />
+                </Button>
+              )}
             </div>
           </form>
 
