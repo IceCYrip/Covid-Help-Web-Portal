@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# uname: chwp
+# pwd: chwp1234
+
+# db link: mongodb+srv://chwp:chwp1234@cluster0.op0zfp8.mongodb.net/?retryWrites=true&w=majority
