@@ -14,7 +14,9 @@
 
 // that button would hit an api to reduce the count of supplies for the respective supplier
 
-//Once the "Order is placed", redirect to receipt page and amount to pay
+// modify models for Orders placed
+
+// Once the "Order is placed", redirect to receipt page and amount to pay
 
 import React from 'react'
 
