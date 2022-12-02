@@ -36,8 +36,15 @@ const Index = () => {
     setIsLoggingIn(true)
     axios.post('http://localhost:4500/api/auth/login', data).then((res) => {
       if (res.status === 200) {
-        dispatch(login(res.data))
-        router.push('/')
+        if (res.data.login) {
+          dispatch(login(res.data))
+          router.push('/')
+        } else {
+          setTimeout(() => {
+            setIsLoggingIn(false)
+          }, 1000)
+          console.log(res.data.message)
+        }
       }
     })
   }

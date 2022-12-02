@@ -6,19 +6,24 @@ import { useSelector } from 'react-redux'
 import SideBar from '../components/SideBar'
 import styles from '../styles/pages.module.css'
 import { DataGrid } from '@mui/x-data-grid'
-import { Button } from '@mui/material'
+import { Button, IconButton } from '@mui/material'
 import Loader from '../components/Loader'
 
 import axios from 'axios'
+import { Edit } from '@mui/icons-material'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
   const [table, setTable] = useState([])
+  const [userType, setUserType] = useState('')
   const [Loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!user.isLoggedIn) {
       router.push('/login')
+    }
+    if (user.user.usertype) {
+      setUserType(user.user.usertype)
     }
 
     axios.get('http://localhost:4500/api/doctor/getAll').then((res) => {
@@ -119,7 +124,7 @@ export default function Home() {
     {
       headerClassName: 'cellColor',
       field: 'doctorName',
-      headerName: 'Donor Name',
+      headerName: 'Doctor Name',
       // width: 250,
       flex: 1,
       sortable: false,
@@ -144,9 +149,27 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'actions',
       headerName: 'Actions',
-      // width: 150,
-      flex: 1,
+      width: 100,
+      // flex: 1,
       sortable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <IconButton
+            // disabled={collapse}
+            // onClick={() => editById(params.row)}
+            >
+              <Edit sx={{ color: '#F92303' }} />
+            </IconButton>
+            {/* <IconButton
+              disabled={collapse}
+              onClick={() => deleteById(params.id)}
+            >
+              <Delete />
+            </IconButton> */}
+          </>
+        )
+      },
     },
   ]
 
@@ -176,30 +199,30 @@ export default function Home() {
               disableSelectionOnClick
               disableColumnMenu
               rows={table}
-              columns={
-                user.user.userType == 'admin' ? admincolumns : normalColumns
-              }
+              columns={userType == 'admin' ? admincolumns : normalColumns}
             />
 
-            <div className={styles.Button}>
-              <Button
-                variant="contained"
-                color="error"
-                sx={{
-                  backgroundColor: '#F92303',
-                  marginTop: '8vh',
-                  width: 200,
-                  height: 70,
-                  fontSize: 'medium',
-                  borderRadius: '15px',
-                }}
-                onClick={() => {
-                  router.push('/booking1')
-                }}
-              >
-                Order Supplies
-              </Button>
-            </div>
+            {user.user.usertype == 'customer' && (
+              <div className={styles.Button}>
+                <Button
+                  variant="contained"
+                  color="error"
+                  sx={{
+                    backgroundColor: '#F92303',
+                    marginTop: '8vh',
+                    width: 200,
+                    height: 70,
+                    fontSize: 'medium',
+                    borderRadius: '15px',
+                  }}
+                  onClick={() => {
+                    router.push('/booking1')
+                  }}
+                >
+                  Order Supplies
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

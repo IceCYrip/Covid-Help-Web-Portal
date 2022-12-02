@@ -7,15 +7,18 @@ import { logout } from '../redux/slices/UserSlice'
 import router from 'next/router'
 
 const SideBar = () => {
+  const dispatch = useDispatch()
   const userData = useSelector((state) => state.user.user)
 
-  const dispatch = useDispatch()
-
   const [name, setName] = useState('')
+  const [userType, setUserType] = useState('')
 
   useEffect(() => {
     if (userData.fullName) {
       setName(userData.fullName)
+    }
+    if (userData.usertype) {
+      setUserType(userData.usertype)
     }
   }, [])
 
@@ -25,8 +28,8 @@ const SideBar = () => {
       clickTo: '/',
     },
     {
-      name: 'ACCOUNT',
-      clickTo: `/${userData.usertype}`,
+      name: userType === 'admin' ? 'REPORTS' : 'ACCOUNT',
+      clickTo: `/${userType}`,
     },
   ]
 
@@ -57,7 +60,7 @@ const SideBar = () => {
             <span
               className={styles.highlightedName}
               onClick={() => {
-                router.push(`/${userData.userType}`)
+                router.push(`/${userType}`)
               }}
             >
               {' ' + name}

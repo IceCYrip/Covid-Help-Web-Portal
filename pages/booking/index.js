@@ -18,6 +18,8 @@
 
 // Once the "Order is placed", redirect to receipt page and amount to pay
 
+// ===> add skeleton in next version for accounts section
+
 import React from 'react'
 
 const index = () => {
