@@ -89,29 +89,6 @@ const index = () => {
       })
   }
 
-  // const deleteById = (id) =>{
-  //   sweetAlert({
-  //     title: 'Are you sure?',
-  //     text: 'Once deleted, you will not be able to recover this record!',
-  //     icon: 'warning',
-  //     buttons: ['Cancel', 'Delete'],
-  //     dangerMode: true,
-  //   }).then((willDelete) => {
-  //     if (willDelete) {
-  //       axios
-  //         .delete(
-  //           `${URLS.BaseURL}/villageMappingWithDesignation/discardVillageMappingWithDesignation/${id}`
-  //         )
-  //         .then((res) => {
-  //           if (res.status == 200) {
-  //             sweetAlert('Deleted!', 'Record Deleted successfully !', 'success')
-  //             setRunAgain(true)
-  //           }
-  //         })
-  //     }
-  //   })
-  // }
-
   return (
     <>
       <Head>
@@ -128,8 +105,8 @@ const index = () => {
               <div className={styles.row}>
                 <TextField
                   sx={{ width: 300 }}
-                  label="Full Name"
-                  variant="standard"
+                  label='Full Name'
+                  variant='standard'
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('fullName')}
                   error={!!errors.fullName}
@@ -137,8 +114,8 @@ const index = () => {
                 />
                 <TextField
                   sx={{ width: 300 }}
-                  label="Contact"
-                  variant="standard"
+                  label='Contact'
+                  variant='standard'
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('contact')}
                   error={!!errors.contact}
@@ -148,8 +125,8 @@ const index = () => {
               <div className={styles.row}>
                 <TextField
                   sx={{ width: 300 }}
-                  label="Address"
-                  variant="standard"
+                  label='Address'
+                  variant='standard'
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('address')}
                   error={!!errors.address}
@@ -157,8 +134,8 @@ const index = () => {
                 />
                 <TextField
                   sx={{ width: 300 }}
-                  label="Pincode"
-                  variant="standard"
+                  label='Pincode'
+                  variant='standard'
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('pincode')}
                   error={!!errors.pincode}
@@ -169,8 +146,8 @@ const index = () => {
               <div className={styles.row}>
                 <TextField
                   sx={{ width: 300 }}
-                  label="Area"
-                  variant="standard"
+                  label='Area'
+                  variant='standard'
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('area')}
                   error={!!errors.address}
@@ -178,8 +155,8 @@ const index = () => {
                 />
                 <TextField
                   sx={{ width: 300 }}
-                  label="Username"
-                  variant="standard"
+                  label='Username'
+                  variant='standard'
                   disabled
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('uname')}
@@ -188,8 +165,8 @@ const index = () => {
 
               <div className={styles.Button}>
                 <Button
-                  variant="contained"
-                  color="error"
+                  variant='contained'
+                  color='error'
                   sx={{
                     backgroundColor: '#F92303',
                     marginTop: '8vh',
@@ -198,7 +175,7 @@ const index = () => {
                     fontSize: 'larger',
                     borderRadius: '15px',
                   }}
-                  type="submit"
+                  type='submit'
                 >
                   Save
                 </Button>

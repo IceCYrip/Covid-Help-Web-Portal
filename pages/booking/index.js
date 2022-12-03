@@ -24,14 +24,23 @@ import { useSelector } from 'react-redux'
 import SideBar from '../../components/SideBar'
 import styles from '../../styles/pages.module.css'
 import { DataGrid } from '@mui/x-data-grid'
-import { Button, IconButton, TextField } from '@mui/material'
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material'
 import Loader from '../../components/Loader'
 import React from 'react'
 
 import axios from 'axios'
 import { Edit, Search, Visibility } from '@mui/icons-material'
 import Head from 'next/head'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
@@ -43,8 +52,8 @@ export default function Home() {
   const [Loading, setLoading] = useState(true)
 
   const schema = yup.object().shape({
-    area: yup.string().required('Please enter no. of area(s)'),
-    mask: yup.string().required('Please enter no. of mask(s)'),
+    area: yup.string().required('Please enter no. of area'),
+    mask: yup.number().required('Please enter no. of mask(s)'),
     remdesivir: yup.number().required('Please enter no. of remdesivir(s)'),
     oxygencylinder: yup
       .number()
@@ -54,7 +63,7 @@ export default function Home() {
   const {
     register,
     handleSubmit,
-    reset,
+    control,
     // watch,
     formState: { errors },
   } = useForm({
@@ -129,6 +138,10 @@ export default function Home() {
     },
   ]
 
+  const finish = (data) => {
+    console.log('Sort cha Data: ', data)
+  }
+
   return (
     <div>
       <Head>
@@ -142,50 +155,75 @@ export default function Home() {
             <h2 className={styles.TitleText}>
               Please select the requirements:
             </h2>
-            <div className={styles.sortRow}>
-              <TextField
-                sx={{ width: 150 }}
-                label='Area'
-                variant='standard'
-                {...register('area')}
-                error={!!errors.area}
-                helperText={errors?.area && errors.area.message}
-              />
-              <TextField
-                sx={{ width: 150 }}
-                label='Mask'
-                type='number'
-                variant='standard'
-                {...register('mask')}
-                error={!!errors.mask}
-                helperText={errors?.mask && errors.mask.message}
-              />
-              <TextField
-                sx={{ width: 150 }}
-                label='Remdesivir'
-                variant='standard'
-                type='number'
-                {...register('remdesivir')}
-                error={!!errors.remdesivir}
-                helperText={errors?.remdesivir && errors.remdesivir.message}
-              />
-              <TextField
-                sx={{ width: 150 }}
-                label='Oxygen Cylinder'
-                variant='standard'
-                type='number'
-                {...register('oxygencylinder')}
-                error={!!errors.oxygencylinder}
-                helperText={
-                  errors?.oxygencylinder && errors.oxygencylinder.message
-                }
-              />
+            <form onSubmit={handleSubmit(finish)}>
+              <div className={styles.sortRow}>
+                <FormControl variant='standard' error={!!errors.area}>
+                  <InputLabel>Area</InputLabel>
+                  <Controller
+                    render={({ field }) => (
+                      <Select
+                        sx={{ width: '180px' }}
+                        labelId='demo-simple-select-standard-label'
+                        id='demo-simple-select-standard'
+                        // value={field.value}
+                        value={field.value}
+                        onChange={(value) => field.onChange(value)}
+                        label='area'
+                      >
+                        <MenuItem value={'Aundh'}>Aundh</MenuItem>
+                        <MenuItem value={'Pimpri'}>Pimpri</MenuItem>
+                        <MenuItem value={'Baner'}>Baner</MenuItem>
+                      </Select>
+                    )}
+                    name='area'
+                    control={control}
+                    defaultValue=''
+                  />
+                  <FormHelperText>
+                    {errors?.area ? errors.area.message : null}
+                  </FormHelperText>
+                </FormControl>
 
-              <div className={styles.customButton}>
-                <Search sx={{ marginRight: '0.5vw' }} />
-                Search
+                <TextField
+                  sx={{ width: 150 }}
+                  label='Mask'
+                  variant='standard'
+                  type='number'
+                  {...register('mask')}
+                  error={!!errors.mask}
+                  helperText={errors?.mask && errors.mask.message}
+                />
+                <TextField
+                  sx={{ width: 150 }}
+                  label='Remdesivir'
+                  variant='standard'
+                  type='number'
+                  {...register('remdesivir')}
+                  error={!!errors.remdesivir}
+                  helperText={errors?.remdesivir && errors.remdesivir.message}
+                />
+                <TextField
+                  sx={{ width: 150 }}
+                  label='Oxygen Cylinder'
+                  variant='standard'
+                  type='number'
+                  {...register('oxygencylinder')}
+                  error={!!errors.oxygencylinder}
+                  helperText={
+                    errors?.oxygencylinder && errors.oxygencylinder.message
+                  }
+                />
+
+                <button
+                  className={styles.customButton}
+                  style={{ marginLeft: '1.5vw' }}
+                  type='submit'
+                >
+                  <Search sx={{ marginRight: '0.5vw' }} />
+                  Search
+                </button>
               </div>
-            </div>
+            </form>
             <span className={styles.subTitleText}>
               IMPORTANT: All the suppliers sell government authorised supplies
               with same rates.

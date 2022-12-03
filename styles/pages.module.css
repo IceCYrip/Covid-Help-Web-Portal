@@ -44,11 +44,12 @@
   justify-content: space-evenly;
   margin-bottom: 20px;
 }
+
 .sortRow {
   width: 100%;
   display: flex;
   justify-content: center;
-  column-gap: 2vw;
+  column-gap: 2.5vw;
   margin-bottom: 4vh;
 }
 
@@ -64,6 +65,7 @@
   color: white;
 
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.24), 0 5px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 0px;
   border-radius: 15px;
 
   font-size: larger;
