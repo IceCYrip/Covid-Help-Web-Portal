@@ -8,11 +8,13 @@ import styles from '../styles/pages.module.css'
 import { DataGrid } from '@mui/x-data-grid'
 import { Button, IconButton } from '@mui/material'
 import Loader from '../components/Loader'
+import React from 'react'
 
 import axios from 'axios'
 import { Edit } from '@mui/icons-material'
 
 export default function Home() {
+  // @ts-ignore
   const user = useSelector((state) => state.user)
   const [table, setTable] = useState([])
   const [userType, setUserType] = useState('')
@@ -177,7 +179,6 @@ export default function Home() {
     <div>
       <Head>
         <title>CHWP - Dashboard</title>
-        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <div className={styles.main}>
         <SideBar />
@@ -204,9 +205,9 @@ export default function Home() {
 
             {user.user.usertype == 'customer' && (
               <div className={styles.Button}>
-                <Button
-                  variant="contained"
-                  color="error"
+                {/* <Button
+                  variant='contained'
+                  color='error'
                   sx={{
                     backgroundColor: '#F92303',
                     marginTop: '8vh',
@@ -216,11 +217,20 @@ export default function Home() {
                     borderRadius: '15px',
                   }}
                   onClick={() => {
-                    router.push('/booking1')
+                    router.push('/booking')
                   }}
                 >
                   Order Supplies
-                </Button>
+                </Button> */}
+                <div
+                  className={styles.customButton}
+                  style={{ marginTop: '5vh' }}
+                  onClick={() => {
+                    router.push('/booking')
+                  }}
+                >
+                  Order Supplies
+                </div>
               </div>
             )}
           </div>
