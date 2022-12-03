@@ -48,13 +48,13 @@ export default function Home() {
   // @ts-ignore
   const user = useSelector((state) => state.user)
   const [table, setTable] = useState([])
-  const [userType, setUserType] = useState('')
-  const [Loading, setLoading] = useState(true)
+  const [Loading, setLoading] = useState(false)
+  const [runAgain, setRunAgain] = useState(false)
 
   const schema = yup.object().shape({
     area: yup.string().required('Please enter no. of area'),
     mask: yup.number().required('Please enter no. of mask(s)'),
-    remdesivir: yup.number().required('Please enter no. of remdesivir(s)'),
+    remdevisir: yup.number().required('Please enter no. of remdesivir(s)'),
     oxygencylinder: yup
       .number()
       .required('Please enter no. of oxygencylinder(s)'),
@@ -75,23 +75,8 @@ export default function Home() {
     if (!user.isLoggedIn) {
       router.push('/login')
     }
-    if (user.user.usertype) {
-      setUserType(user.user.usertype)
-    }
-
-    axios.get('http://localhost:4500/api/doctor/getAll').then((res) => {
-      setTable(
-        res.data.map((response, index) => ({
-          srNo: index + 1,
-          id: response._id,
-          doctorName: response.fullName,
-          area: response.area,
-          contact: response.contact,
-        }))
-      )
-      setLoading(false)
-    })
-  }, [])
+    setRunAgain(false)
+  }, [runAgain])
 
   const columns = [
     {
@@ -139,7 +124,24 @@ export default function Home() {
   ]
 
   const finish = (data) => {
+    setLoading(true)
     console.log('Sort cha Data: ', data)
+
+    axios
+      .post('http://localhost:4500/api/supplier/sortSuppliers', data)
+      .then((res) => {
+        console.log('Response: ', res.data)
+        setTable(
+          res.data.map((response, index) => ({
+            srNo: index + 1,
+            id: response._id,
+            suppName: response.suppname,
+            contact: response.contact,
+          }))
+        )
+        setLoading(false)
+        setRunAgain(true)
+      })
   }
 
   return (
@@ -170,9 +172,13 @@ export default function Home() {
                         onChange={(value) => field.onChange(value)}
                         label='area'
                       >
-                        <MenuItem value={'Aundh'}>Aundh</MenuItem>
-                        <MenuItem value={'Pimpri'}>Pimpri</MenuItem>
+                        <MenuItem value={'Raigad'}>Raigad</MenuItem>
+                        <MenuItem value={'Pen'}>Pen</MenuItem>
                         <MenuItem value={'Baner'}>Baner</MenuItem>
+                        <MenuItem value={'Kothrud'}>Kothrud</MenuItem>
+                        <MenuItem value={'Chinchwad'}>Chinchwad</MenuItem>
+                        <MenuItem value={'Viman Nagar'}>Viman Nagar</MenuItem>
+                        <MenuItem value={'Shivajinagar'}>Shivajinagar</MenuItem>
                       </Select>
                     )}
                     name='area'
@@ -195,12 +201,12 @@ export default function Home() {
                 />
                 <TextField
                   sx={{ width: 150 }}
-                  label='Remdesivir'
+                  label='Remdevisir'
                   variant='standard'
                   type='number'
-                  {...register('remdesivir')}
-                  error={!!errors.remdesivir}
-                  helperText={errors?.remdesivir && errors.remdesivir.message}
+                  {...register('remdevisir')}
+                  error={!!errors.remdevisir}
+                  helperText={errors?.remdevisir && errors.remdevisir.message}
                 />
                 <TextField
                   sx={{ width: 150 }}

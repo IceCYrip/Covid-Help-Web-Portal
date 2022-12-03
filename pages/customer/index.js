@@ -16,6 +16,7 @@ import Loader from '../../components/Loader'
 const index = () => {
   const [Loading, setLoading] = useState(true)
   const [runAgain, setRunAgain] = useState(false)
+  // @ts-ignore
   const user = useSelector((state) => state.user.user)
 
   const schema = yup.object().shape({
@@ -30,7 +31,6 @@ const index = () => {
     register,
     handleSubmit,
     reset,
-    // watch,
     formState: { errors },
   } = useForm({
     criteriaMode: 'all',
