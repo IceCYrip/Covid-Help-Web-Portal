@@ -1,23 +1,3 @@
-// 4 fields
-// area
-// maskCount
-// remdesivirCount
-// oxygencylinderCount
-// Sort suppliers in table in real time (when changed values in select field)
-
-//IMPORTANT: All the suppliers sell government authorised supplies with same rates.
-// a table with a button after each entry
-
-// the button opens up a modal where supplier details are displayed with a button to place an order
-
-// that button would hit an api to reduce the count of supplies for the respective supplier
-
-// modify models for Orders placed
-
-// Once the "Order is placed", redirect to receipt page and amount to pay
-
-// ===> add skeleton in next version for accounts section
-
 import router from 'next/router'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
