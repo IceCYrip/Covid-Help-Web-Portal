@@ -1,23 +1,3 @@
-// 4 fields
-// area
-// maskCount
-// remdesivirCount
-// oxygencylinderCount
-// Sort suppliers in table in real time (when changed values in select field)
-
-//IMPORTANT: All the suppliers sell government authorised supplies with same rates.
-// a table with a button after each entry
-
-// the button opens up a modal where supplier details are displayed with a button to place an order
-
-// that button would hit an api to reduce the count of supplies for the respective supplier
-
-// modify models for Orders placed
-
-// Once the "Order is placed", redirect to receipt page and amount to pay
-
-// ===> add skeleton in next version for accounts section
-
 import router from 'next/router'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -157,27 +137,27 @@ export default function Home() {
             </h2>
             <form onSubmit={handleSubmit(finish)}>
               <div className={styles.sortRow}>
-                <FormControl variant='standard' error={!!errors.area}>
+                <FormControl variant="standard" error={!!errors.area}>
                   <InputLabel>Area</InputLabel>
                   <Controller
                     render={({ field }) => (
                       <Select
                         sx={{ width: '180px' }}
-                        labelId='demo-simple-select-standard-label'
-                        id='demo-simple-select-standard'
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
                         // value={field.value}
                         value={field.value}
                         onChange={(value) => field.onChange(value)}
-                        label='area'
+                        label="area"
                       >
                         <MenuItem value={'Aundh'}>Aundh</MenuItem>
                         <MenuItem value={'Pimpri'}>Pimpri</MenuItem>
                         <MenuItem value={'Baner'}>Baner</MenuItem>
                       </Select>
                     )}
-                    name='area'
+                    name="area"
                     control={control}
-                    defaultValue=''
+                    defaultValue=""
                   />
                   <FormHelperText>
                     {errors?.area ? errors.area.message : null}
@@ -186,27 +166,27 @@ export default function Home() {
 
                 <TextField
                   sx={{ width: 150 }}
-                  label='Mask'
-                  variant='standard'
-                  type='number'
+                  label="Mask"
+                  variant="standard"
+                  type="number"
                   {...register('mask')}
                   error={!!errors.mask}
                   helperText={errors?.mask && errors.mask.message}
                 />
                 <TextField
                   sx={{ width: 150 }}
-                  label='Remdesivir'
-                  variant='standard'
-                  type='number'
+                  label="Remdesivir"
+                  variant="standard"
+                  type="number"
                   {...register('remdesivir')}
                   error={!!errors.remdesivir}
                   helperText={errors?.remdesivir && errors.remdesivir.message}
                 />
                 <TextField
                   sx={{ width: 150 }}
-                  label='Oxygen Cylinder'
-                  variant='standard'
-                  type='number'
+                  label="Oxygen Cylinder"
+                  variant="standard"
+                  type="number"
                   {...register('oxygencylinder')}
                   error={!!errors.oxygencylinder}
                   helperText={
@@ -217,7 +197,7 @@ export default function Home() {
                 <button
                   className={styles.customButton}
                   style={{ marginLeft: '1.5vw' }}
-                  type='submit'
+                  type="submit"
                 >
                   <Search sx={{ marginRight: '0.5vw' }} />
                   Search
