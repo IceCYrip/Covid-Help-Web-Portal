@@ -205,26 +205,9 @@ export default function Home() {
 
             {user.user.usertype == 'customer' && (
               <div className={styles.Button}>
-                {/* <Button
-                  variant='contained'
-                  color='error'
-                  sx={{
-                    backgroundColor: '#F92303',
-                    marginTop: '8vh',
-                    width: 200,
-                    height: 70,
-                    fontSize: 'medium',
-                    borderRadius: '15px',
-                  }}
-                  onClick={() => {
-                    router.push('/booking')
-                  }}
-                >
-                  Order Supplies
-                </Button> */}
                 <div
                   className={styles.customButton}
-                  style={{ marginTop: '5vh' }}
+                  style={{ marginTop: '8vh' }}
                   onClick={() => {
                     router.push('/booking')
                   }}

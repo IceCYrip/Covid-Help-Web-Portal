@@ -1,3 +1,4 @@
+import React from 'react'
 import '../styles/globals.css'
 import store, { persistor } from '../redux/store'
 import { Provider } from 'react-redux'
@@ -21,7 +22,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <LoadingBar
-        color="black"
+        color='black'
         waitingTime={250}
         progress={loadingProgress}
         onLoaderFinished={() => {

@@ -4,6 +4,7 @@ const SupplierSchema = new mongoose.Schema({
   compname: {
     type: String,
   },
+
   suppname: {
     type: String,
   },
@@ -45,10 +46,41 @@ const SupplierSchema = new mongoose.Schema({
   oxygencylinder: {
     type: Number,
   },
-  usertype: {
-    type: String,
-    required: true,
-  },
+  orders: [
+    {
+      customerName: {
+        type: String,
+        required: true,
+      },
+      address: {
+        type: String,
+        required: true,
+      },
+      mask: {
+        type: Number,
+        required: true,
+        default: 1,
+      },
+      remdevisir: {
+        type: Number,
+        required: true,
+        default: 1,
+      },
+      oxygencylinder: {
+        type: Number,
+        required: true,
+        default: 1,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      status: {
+        type: String,
+        default: 'To be Dispatched',
+      },
+    },
+  ],
 })
 
 mongoose.models = {}
