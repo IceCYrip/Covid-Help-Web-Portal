@@ -75,3 +75,62 @@
   cursor: pointer;
   background-color: rgb(250, 107, 107);
 }
+
+.modalContent {
+  display: flex;
+  justify-content: center;
+  font-size: large;
+}
+
+.modalLeft {
+  display: flex;
+  flex-direction: column;
+
+  font-weight: bold;
+}
+
+.modalLeft > span {
+  margin-bottom: 0.3vw;
+}
+
+.modalRight {
+  margin-left: 2vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalRight > span {
+  margin-bottom: 0.3vw;
+}
+
+.button2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 5vh;
+  width: 8vw;
+
+  background-color: white;
+  color: red;
+
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.24), 0 5px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  border: 0px;
+
+  font-weight: bold;
+}
+
+.button2:hover {
+  cursor: pointer;
+  background-color: rgb(250, 107, 107);
+  color: white;
+}
+
+.buttonBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}

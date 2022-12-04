@@ -22,7 +22,7 @@ const handler = async (req, res) => {
               login: true,
               _id: customer._id,
               fullName: customer.fullName,
-              usertype: customer.usertype,
+              usertype: 'customer',
             })
           } else {
             res.status(200).json({ login: false, message: 'Bad Credentials' })
@@ -35,7 +35,7 @@ const handler = async (req, res) => {
               login: true,
               _id: supplier._id,
               fullName: supplier.suppname,
-              usertype: supplier.usertype,
+              usertype: 'supplier',
             })
           } else {
             res.status(200).json({ login: false, message: 'Bad Credentials' })
@@ -48,7 +48,7 @@ const handler = async (req, res) => {
               _id: admin._id,
               fullName: 'admin',
               uname: admin.uname,
-              usertype: admin.usertype,
+              usertype: 'admin',
             })
           } else {
             // res.status(200).json({ message: 'Bad Credentials' })

@@ -5,7 +5,6 @@ import SideBar from '../../components/SideBar'
 import styles from '../../styles/pages.module.css'
 import { DataGrid } from '@mui/x-data-grid'
 import {
-  Button,
   FormControl,
   FormHelperText,
   IconButton,
@@ -18,18 +17,38 @@ import Loader from '../../components/Loader'
 import React from 'react'
 
 import axios from 'axios'
-import { Edit, Search, Visibility } from '@mui/icons-material'
+import { CottageSharp, Edit, Search, Visibility } from '@mui/icons-material'
 import Head from 'next/head'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import Modal from '../../components/Modal'
 
 export default function Home() {
   // @ts-ignore
   const user = useSelector((state) => state.user)
+  const [supplierDetails, setSupplierDetails] = useState({
+    suppName: '',
+    compName: '',
+    contact: 1,
+    address: '',
+    area: '',
+    pincode: 1,
+    upi: '',
+  })
   const [table, setTable] = useState([])
   const [Loading, setLoading] = useState(false)
+  const [supplierModal, setSupplierModal] = useState(false)
+  const [orderModal, setOrderModal] = useState(false)
   const [runAgain, setRunAgain] = useState(false)
+  const [order, setOrder] = useState({
+    mask: 1,
+    remdevisir: 1,
+    oxygencylinder: 1,
+  })
+  const maskPrice = 20
+  const remdevisirPrice = 100
+  const oxygenCylinderPrice = 400
 
   const schema = yup.object().shape({
     area: yup.string().required('Please enter no. of area'),
@@ -94,7 +113,7 @@ export default function Home() {
       renderCell: (params) => {
         return (
           <>
-            <IconButton onClick={() => console.log(params.row)}>
+            <IconButton onClick={() => fetchSupplier(params.row.id)}>
               <Visibility sx={{ color: '#F92303' }} />
             </IconButton>
           </>
@@ -103,10 +122,30 @@ export default function Home() {
     },
   ]
 
+  const cost = () => {
+    const price =
+      maskPrice * order.mask +
+      remdevisirPrice * order.remdevisir +
+      oxygenCylinderPrice * order.oxygencylinder
+
+    return price
+  }
+
+  const fetchSupplier = (id) => {
+    setSupplierModal(true)
+    axios
+      .post('http://localhost:4500/api/supplier/getDetails', { _id: id })
+      .then((res) => {
+        console.log('Supplier: ', res.data)
+
+        setSupplierDetails({ ...res.data })
+      })
+  }
+
   const finish = (data) => {
     setLoading(true)
     console.log('Sort cha Data: ', data)
-
+    setOrder(data)
     axios
       .post('http://localhost:4500/api/supplier/sortSuppliers', data)
       .then((res) => {
@@ -119,8 +158,11 @@ export default function Home() {
             contact: response.contact,
           }))
         )
-        setLoading(false)
-        setRunAgain(true)
+        setTimeout(() => {
+          setLoading(false)
+
+          setRunAgain(true)
+        }, 1000)
       })
   }
 
@@ -133,6 +175,133 @@ export default function Home() {
         <SideBar />
         <div className={styles.rightSide}>
           {Loading && <Loader />}
+          {supplierModal && (
+            <Modal>
+              <h2
+                style={{
+                  margin: 0,
+                  marginBottom: 20,
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
+                }}
+              >
+                Supplier Details
+              </h2>
+              <div className={styles.modalContent}>
+                <div className={styles.modalLeft}>
+                  <span>Supplier Name </span>
+                  <span>Company Name </span>
+                  <span>Contact </span>
+                  <span>Address </span>
+                  <span>Area </span>
+                  <span>Pincode </span>
+                  <span>UPI </span>
+                </div>
+                <div className={styles.modalRight}>
+                  <span>: {supplierDetails.suppName}</span>
+                  <span>: {supplierDetails.compName}</span>
+                  <span>: {supplierDetails.contact}</span>
+                  <span>: {supplierDetails.address}</span>
+                  <span>: {supplierDetails.area}</span>
+                  <span>: {supplierDetails.pincode}</span>
+                  <span>: {supplierDetails.upi}</span>
+                </div>
+              </div>
+              <div className={styles.buttonBox}>
+                <button
+                  className={styles.customButton}
+                  style={{ width: 200 }}
+                  onClick={() => {
+                    setSupplierModal(false)
+                    setOrderModal(true)
+                  }}
+                >
+                  Go to Checkout
+                </button>
+                <button
+                  className={styles.button2}
+                  style={{
+                    width: 100,
+                    marginTop: 5,
+                    textTransform: 'uppercase',
+                  }}
+                  onClick={() => {
+                    setSupplierModal(false)
+                  }}
+                >
+                  Back
+                </button>
+              </div>
+            </Modal>
+          )}
+          {orderModal && (
+            <Modal>
+              <div>
+                <h2
+                  style={{
+                    margin: 0,
+                    marginBottom: 20,
+                    textAlign: 'center',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Order
+                </h2>
+                <div className={styles.modalContent}>
+                  <div className={styles.modalLeft}>
+                    <span>Supplier Name </span>
+                    <span>Company Name </span>
+                    <span>UPI </span>
+                    <span>Mask(s) </span>
+                    <span>Remdevisir(s) </span>
+                    <span>Oxygen Cylinder(s) </span>
+                    <span>Total Cost: </span>
+                  </div>
+                  <div className={styles.modalRight}>
+                    <span>: {supplierDetails.suppName}</span>
+                    <span>: {supplierDetails.compName}</span>
+                    <span>: {supplierDetails.upi}</span>
+                    <span>
+                      : {order.mask} x Rs.{maskPrice}
+                    </span>
+                    <span>
+                      : {order.remdevisir} x Rs.{remdevisirPrice}
+                    </span>
+                    <span>
+                      : {order.oxygencylinder} x Rs.{oxygenCylinderPrice}
+                    </span>
+                    <span>
+                      : <span style={{ fontWeight: 'bold' }}>Rs. {cost()}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.buttonBox}>
+                <button
+                  className={styles.customButton}
+                  onClick={() => {
+                    setOrderModal(false)
+                  }}
+                >
+                  Place Order
+                </button>
+                <button
+                  className={styles.button2}
+                  style={{
+                    width: 100,
+                    marginTop: 5,
+                    textTransform: 'uppercase',
+                  }}
+                  onClick={() => {
+                    setSupplierModal(true)
+                    setOrderModal(false)
+                  }}
+                >
+                  Back
+                </button>
+              </div>
+            </Modal>
+          )}
           <div className={styles.Content}>
             <h2 className={styles.TitleText}>
               Please select the requirements:
@@ -220,6 +389,7 @@ export default function Home() {
                   backgroundColor: '#F92303',
                   color: 'white',
                 },
+                zIndex: 0,
               }}
               autoHeight
               hideFooter

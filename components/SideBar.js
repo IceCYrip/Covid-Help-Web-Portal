@@ -8,6 +8,7 @@ import router from 'next/router'
 
 const SideBar = () => {
   const dispatch = useDispatch()
+  // @ts-ignore
   const userData = useSelector((state) => state.user.user)
 
   const [name, setName] = useState('')
@@ -15,12 +16,12 @@ const SideBar = () => {
 
   useEffect(() => {
     if (userData.fullName) {
-      setName(userData.fullName)
+      setName(userData.fullName.split(' ')[0])
     }
     if (userData.usertype) {
       setUserType(userData.usertype)
     }
-  }, [])
+  }, [userData])
 
   const menu = [
     {
@@ -43,7 +44,7 @@ const SideBar = () => {
             src={logo}
             width={100}
             height={100}
-            alt="Logo"
+            alt='Logo'
             className={styles.headerContents}
           />
           <span

@@ -6,9 +6,10 @@ import SideBar from '../../components/SideBar'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import sweetAlert from 'sweetalert'
+import { login } from '../../redux/slices/UserSlice'
 
 import styles from '../../styles/pages.module.css'
 import Loader from '../../components/Loader'
@@ -18,6 +19,7 @@ const index = () => {
   const [runAgain, setRunAgain] = useState(false)
   // @ts-ignore
   const user = useSelector((state) => state.user.user)
+  const dispatch = useDispatch()
 
   const schema = yup.object().shape({
     fullName: yup.string().required('Please enter a name.'),
@@ -46,6 +48,8 @@ const index = () => {
       })
       .then((res) => {
         reset({ ...res.data })
+        dispatch(login({ ...user, fullName: res.data.fullName }))
+
         setLoading(false)
       })
   }, [runAgain])
