@@ -34,18 +34,31 @@ const Index = () => {
 
   const finish = (data) => {
     setIsLoggingIn(true)
-    axios.post('http://localhost:4500/api/auth/login', data).then((res) => {
-      if (res.status === 200 && res.data.login) {
-        const { _id, fullName, usertype } = res.data
-        dispatch(login({ _id, fullName, usertype }))
-        router.push('/')
-      } else {
+    axios
+      .post('http://localhost:4500/api/auth/login', data)
+      .then((res) => {
+        if (res.status === 200 && res.data.login) {
+          const { _id, fullName, usertype } = res.data
+          dispatch(login({ _id, fullName, usertype }))
+          router.push('/')
+        } else {
+          setTimeout(() => {
+            setIsLoggingIn(false)
+          }, 1000)
+          console.log(res.data.message)
+        }
+      })
+      .catch((error) => {
         setTimeout(() => {
           setIsLoggingIn(false)
         }, 1000)
-        console.log(res.data.message)
-      }
-    })
+
+        if (error.response.status === 400) {
+          window.alert('Wrong Credentials')
+        } else {
+          window.alert('Something went wrong')
+        }
+      })
   }
 
   return (

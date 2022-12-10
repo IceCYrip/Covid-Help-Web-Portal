@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <LoadingBar
-        color='black'
+        color="black"
         waitingTime={250}
         progress={loadingProgress}
         onLoaderFinished={() => {

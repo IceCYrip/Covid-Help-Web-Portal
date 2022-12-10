@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react'
 
 import { Button, TextField } from '@mui/material'
 import Head from 'next/head'
-import SideBar from '../../components/SideBar'
+import SideBar from '../components/SideBar'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import sweetAlert from 'sweetalert'
-import { login } from '../../redux/slices/UserSlice'
+import { login } from '../redux/slices/UserSlice'
 
 import styles from '../../styles/pages.module.css'
-import Loader from '../../components/Loader'
+import Loader from '../components/Loader'
 
 const index = () => {
   const [Loading, setLoading] = useState(true)
@@ -91,6 +91,9 @@ const index = () => {
           setRunAgain(true)
         }
       })
+      .catch((error) => {
+        console.log('Error:', error.response.data)
+      })
   }
 
   return (
@@ -109,8 +112,8 @@ const index = () => {
               <div className={styles.row}>
                 <TextField
                   sx={{ width: 300 }}
-                  label='Full Name'
-                  variant='standard'
+                  label="Full Name"
+                  variant="standard"
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('fullName')}
                   error={!!errors.fullName}
@@ -118,8 +121,8 @@ const index = () => {
                 />
                 <TextField
                   sx={{ width: 300 }}
-                  label='Contact'
-                  variant='standard'
+                  label="Contact"
+                  variant="standard"
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('contact')}
                   error={!!errors.contact}
@@ -129,8 +132,8 @@ const index = () => {
               <div className={styles.row}>
                 <TextField
                   sx={{ width: 300 }}
-                  label='Address'
-                  variant='standard'
+                  label="Address"
+                  variant="standard"
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('address')}
                   error={!!errors.address}
@@ -138,8 +141,8 @@ const index = () => {
                 />
                 <TextField
                   sx={{ width: 300 }}
-                  label='Pincode'
-                  variant='standard'
+                  label="Pincode"
+                  variant="standard"
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('pincode')}
                   error={!!errors.pincode}
@@ -150,8 +153,8 @@ const index = () => {
               <div className={styles.row}>
                 <TextField
                   sx={{ width: 300 }}
-                  label='Area'
-                  variant='standard'
+                  label="Area"
+                  variant="standard"
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('area')}
                   error={!!errors.address}
@@ -159,8 +162,8 @@ const index = () => {
                 />
                 <TextField
                   sx={{ width: 300 }}
-                  label='Username'
-                  variant='standard'
+                  label="Username"
+                  variant="standard"
                   disabled
                   InputLabelProps={{ shrink: !Loading }}
                   {...register('uname')}
@@ -169,8 +172,8 @@ const index = () => {
 
               <div className={styles.Button}>
                 <Button
-                  variant='contained'
-                  color='error'
+                  variant="contained"
+                  color="error"
                   sx={{
                     backgroundColor: '#F92303',
                     marginTop: '8vh',
@@ -179,7 +182,7 @@ const index = () => {
                     fontSize: 'larger',
                     borderRadius: '15px',
                   }}
-                  type='submit'
+                  type="submit"
                 >
                   Save
                 </Button>
