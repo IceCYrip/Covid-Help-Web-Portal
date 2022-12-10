@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react'
 
 import { Button, TextField } from '@mui/material'
 import Head from 'next/head'
-import SideBar from '../components/SideBar'
+import SideBar from '../../components/SideBar'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import sweetAlert from 'sweetalert'
-import { login } from '../redux/slices/UserSlice'
+import { login } from '../../redux/slices/UserSlice'
 
 import styles from '../../styles/pages.module.css'
-import Loader from '../components/Loader'
+import Loader from '../../components/Loader'
 
 const index = () => {
   const [Loading, setLoading] = useState(true)
@@ -118,8 +118,6 @@ const index = () => {
                   error={!!errors.contact}
                   helperText={errors?.contact && errors.contact.message}
                 />
-              </div>
-              <div className={styles.row}>
                 <TextField
                   sx={{ width: 300 }}
                   label="Address"
@@ -129,6 +127,8 @@ const index = () => {
                   error={!!errors.address}
                   helperText={errors?.address && errors.address.message}
                 />
+              </div>
+              <div className={styles.row}>
                 <TextField
                   sx={{ width: 300 }}
                   label="Pincode"
@@ -138,9 +138,6 @@ const index = () => {
                   error={!!errors.pincode}
                   helperText={errors?.pincode && errors.pincode.message}
                 />
-              </div>
-
-              <div className={styles.row}>
                 <TextField
                   sx={{ width: 300 }}
                   label="Area"

@@ -185,7 +185,7 @@ export default function Home() {
         <div className={styles.rightSide}>
           {Loading && <Loader />}
           <div className={styles.Content}>
-            <h2 className={styles.TitleText}>
+            <h2 className={styles.TitleText} style={{ marginBottom: '5vh' }}>
               Below are the COVID helpline numbers of the doctors on call.
             </h2>
             <DataGrid
@@ -207,7 +207,7 @@ export default function Home() {
               <div className={styles.Button}>
                 <div
                   className={styles.customButton}
-                  style={{ marginTop: '8vh' }}
+                  style={{ marginTop: '8vh', textTransform: 'uppercase' }}
                   onClick={() => {
                     router.push('/booking')
                   }}

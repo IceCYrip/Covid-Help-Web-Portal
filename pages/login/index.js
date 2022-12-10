@@ -37,7 +37,7 @@ const Index = () => {
     axios
       .post('http://localhost:4500/api/auth/login', data)
       .then((res) => {
-        if (res.status === 200 && res.data.login) {
+        if (res.status === 200) {
           const { _id, fullName, usertype } = res.data
           dispatch(login({ _id, fullName, usertype }))
           router.push('/')
@@ -93,24 +93,14 @@ const Index = () => {
                 error={!!errors.pwd}
                 helperText={errors?.pwd && errors.pwd.message}
               />
-
-              {!isLoggingIn ? (
-                <Button
-                  variant="contained"
-                  color="error"
-                  sx={{ backgroundColor: '#F92303' }}
-                  type="submit"
-                >
-                  Login
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  color="error"
-                  sx={{ backgroundColor: '#F92303' }}
-                  type="submit"
-                >
-                  Login
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ backgroundColor: '#F92303' }}
+                type="submit"
+              >
+                Login
+                {!isLoggingIn && (
                   <Image
                     style={{ marginLeft: 10 }}
                     src={loaderSvg}
@@ -119,8 +109,8 @@ const Index = () => {
                     alt="loader"
                     priority
                   />
-                </Button>
-              )}
+                )}
+              </Button>
             </div>
           </form>
 
