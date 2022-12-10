@@ -30,7 +30,7 @@ const SideBar = () => {
     },
     {
       name: userType === 'admin' ? 'REPORTS' : 'ACCOUNT',
-      clickTo: `/${userType}`,
+      clickTo: `/account/${userType}`,
     },
   ]
 
@@ -44,7 +44,7 @@ const SideBar = () => {
             src={logo}
             width={100}
             height={100}
-            alt='Logo'
+            alt="Logo"
             className={styles.headerContents}
           />
           <span
@@ -57,7 +57,7 @@ const SideBar = () => {
 
         <div className={styles.menu}>
           <span className={styles.name}>
-            Welcome
+            Welcome back,
             <span
               className={styles.highlightedName}
               onClick={() => {
