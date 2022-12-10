@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }) {
     router.events.on('routeChangeStart', () => {
       setLoadingProgress(40)
     })
+
     router.events.on('routeChangeComplete', () => {
       setLoadingProgress(100)
     })
