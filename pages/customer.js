@@ -64,21 +64,11 @@ const index = () => {
       .post(`http://localhost:4500/api/${user.usertype}/save`, bodyForApi)
       .then((res) => {
         if (res.status === 200) {
-          // sweetAlert('Updated!', 'Record Updated successfully !', 'success')
-
           sweetAlert({
             title: 'Updated!',
             text: 'Record Updated successfully !',
             icon: 'success',
-            // buttons: ['Delete'],
             buttons: {
-              // cancel: {
-              //   text: "Cancel",
-              //   value: null,
-              //   visible: false,
-              //   className: "",
-              //   closeModal: true,
-              // },
               confirm: {
                 text: 'OK',
                 visible: true,
