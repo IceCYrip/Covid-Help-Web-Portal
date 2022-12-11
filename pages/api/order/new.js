@@ -26,7 +26,9 @@ const handler = async (req, res) => {
       supplier.orders.push({ orderID: createdOrder._id })
       await Supplier.findByIdAndUpdate(req.body.supplierId, supplier)
 
-      res.status(201).json({ message: 'Order Placed' })
+      res
+        .status(201)
+        .json({ title: 'Order Placed!', message: 'Status: To be Dispatched ' })
     } catch (error) {
       console.error('Error: ', error.message)
       res.status(500).send('Internal Server Error')

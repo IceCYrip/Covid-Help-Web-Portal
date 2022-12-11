@@ -90,7 +90,7 @@ const index = () => {
             custAddress: j.custAddress,
             mask: j.mask,
             remdevisir: j.remdevisir,
-            oxygenCylinder: j.oxygencylinder,
+            oxygencylinder: j.oxygencylinder,
             price: j.price,
             status: j.status,
           }))
@@ -115,15 +115,49 @@ const index = () => {
       })
   }, [runAgain])
 
-  const updateOrderStatus = (data) => {
-    console.log('Data: ', data)
+  const updateOrderStatus = (id) => {
+    console.log('ID: ', id)
+    setLoading(true)
 
-    const bodyForApi = {
-      customerId: data.customerId,
-      supplierOrderId: data._id,
-    }
-
-    // console.log('Body For API: ', bodyForApi)
+    //Update Orders
+    axios
+      .post(`http://localhost:4500/api/order/update`, {
+        orderId: id,
+      })
+      .then((res) => {
+        setLoading(false)
+        sweetAlert({
+          title: `${res.data.title}`,
+          text: `${res.data.message}`,
+          icon: 'success',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+        setRunAgain(true)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        setLoading(false)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
   }
 
   const columns = [
@@ -169,7 +203,7 @@ const index = () => {
     },
     {
       headerClassName: 'cellColor',
-      field: 'oxygenCylinder',
+      field: 'oxygencylinder',
       headerName: (
         <Image
           src={o2SVG}
@@ -227,35 +261,25 @@ const index = () => {
       renderCell: (params) => {
         return (
           <>
-            {params.row.status === 'To be Dispatched' && (
-              <Button
-                variant="contained"
-                color="error"
-                sx={{
-                  backgroundColor: '#F92303',
-                  width: 120,
-                  borderRadius: '15px',
-                }}
-                onClick={() => updateOrderStatus(params.row)}
-              >
-                Dispatch
-              </Button>
-            )}
-            {params.row.status === 'Dispatched' && (
-              <Button
-                variant="contained"
-                color="error"
-                sx={{
-                  backgroundColor: '#F92303',
-                  width: 120,
-                  borderRadius: '15px',
-                }}
-                onClick={() => updateOrderStatus(params.row)}
-              >
-                Deliver
-              </Button>
-            )}
+            {params.row.status !== 'Delivered' &&
+              params.row.status !== 'Cancelled' && (
+                <Button
+                  variant="contained"
+                  color="error"
+                  sx={{
+                    backgroundColor: '#F92303',
+                    width: 120,
+                    borderRadius: '15px',
+                  }}
+                  onClick={() => updateOrderStatus(params.row._id)}
+                >
+                  {params.row.status === 'To be Dispatched'
+                    ? 'Dispatch'
+                    : 'Deliver'}
+                </Button>
+              )}
             {params.row.status === 'Delivered' && 'Delivered'}
+            {params.row.status === 'Cancelled' && 'Cancelled'}
           </>
         )
       },

@@ -26,7 +26,7 @@ const handler = async (req, res) => {
           for (let obj of filtered) {
             user = await Supplier.findById(obj.supplierId)
             response.push({
-              // _id: obj._id,
+              _id: obj._id,
               suppName: user.fullName,
               suppAddress: user.address,
               mask: obj.mask,

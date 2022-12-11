@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Button, Paper, TextField } from '@mui/material'
+import { Button, IconButton, Paper, TextField } from '@mui/material'
 import Head from 'next/head'
 import SideBar from '../../components/SideBar'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -18,6 +18,7 @@ import styles from '../../styles/pages.module.css'
 import Loader from '../../components/Loader'
 import { DataGrid } from '@mui/x-data-grid'
 import Image from 'next/image'
+import { Delete } from '@mui/icons-material'
 
 const index = () => {
   const [Loading, setLoading] = useState(true)
@@ -57,21 +58,13 @@ const index = () => {
       .then((res) => {
         reset({ ...res.data })
         dispatch(login({ ...user, fullName: res.data.fullName }))
-        console.log('Orders: ', res.data.orders)
-        setOrders(
-          res.data.orders.map((j, i) => ({
-            srNo: i + 1,
-            ...j,
-            id: j._id,
-          }))
-        )
         setLoading(false)
       })
       .catch((error) => {
         console.log('error: ', error)
         sweetAlert({
           title: 'ERROR!',
-          text: `${error.response.data}`,
+          text: `${error}`,
           icon: 'error',
           buttons: {
             confirm: {
@@ -94,11 +87,12 @@ const index = () => {
           res.data.map((j, i) => ({
             id: i + 1,
             srNo: i + 1,
+            _id: j._id,
             suppName: j.suppName,
             suppAddress: j.suppAddress,
             mask: j.mask,
             remdevisir: j.remdevisir,
-            oxygenCylinder: j.oxygencylinder,
+            oxygencylinder: j.oxygencylinder,
             price: j.price,
             status: j.status,
           }))
@@ -107,6 +101,51 @@ const index = () => {
       })
       .catch((error) => {
         console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
+  }, [runAgain])
+
+  const cancelOrder = (index) => {
+    const bodyForApi = {
+      orderId: orders[index]._id,
+      status: 'cancel',
+    }
+
+    //Update Orders
+    axios
+      .post(`http://localhost:4500/api/order/update`, bodyForApi)
+      .then((res) => {
+        setLoading(false)
+        sweetAlert({
+          title: `${res.data.title}`,
+          text: `${res.data.message}`,
+          icon: 'success',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+        setRunAgain(true)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        setLoading(false)
         sweetAlert({
           title: 'ERROR!',
           text: `${error.response.data}`,
@@ -121,7 +160,7 @@ const index = () => {
           dangerMode: true,
         })
       })
-  }, [runAgain])
+  }
 
   const columns = [
     {
@@ -140,7 +179,7 @@ const index = () => {
     },
     {
       headerClassName: 'cellColor',
-      field: 'address',
+      field: 'suppAddress',
       headerName: 'Supplier Address',
       flex: 1,
       sortable: false,
@@ -222,7 +261,22 @@ const index = () => {
       flex: 1,
       sortable: false,
       renderCell: (params) => {
-        return <>{params.row.status}</>
+        return (
+          <>
+            {params.row.status === 'To be Dispatched' && (
+              <>
+                {params.row.status}
+                <IconButton
+                  sx={{ color: '#F92303', marginLeft: 2 }}
+                  onClick={() => cancelOrder(params.row.srNo - 1)}
+                >
+                  <Delete />
+                </IconButton>
+              </>
+            )}
+            {params.row.status !== 'To be Dispatched' && params.row.status}
+          </>
+        )
       },
     },
   ]
@@ -258,7 +312,7 @@ const index = () => {
         console.log('error: ', error)
         sweetAlert({
           title: 'ERROR!',
-          text: `${error.response.data}`,
+          text: `${error}`,
           icon: 'error',
           buttons: {
             confirm: {

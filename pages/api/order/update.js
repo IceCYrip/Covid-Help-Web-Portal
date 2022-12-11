@@ -58,10 +58,22 @@ const handler = async (req, res) => {
     try {
       if (req.body.orderId) {
         let order = await Order.findById(req.body.orderId)
-        order.status =
-          order.status === 'To be Dispatched' ? 'Dispatched' : 'Delivered'
+        if (!req.body.status) {
+          order.status =
+            order.status === 'To be Dispatched' ? 'Dispatched' : 'Delivered'
+        } else {
+          order.status = 'Cancelled'
+        }
         await Order.findByIdAndUpdate(req.body.orderId, order)
-        res.status(200).json(order)
+        res.status(200).json({
+          title:
+            order.status == 'Dispatched'
+              ? 'Dispatched'
+              : order.status == 'Delivered'
+              ? 'Delivered'
+              : 'Cancelled',
+          message: 'Order status updated',
+        })
       } else {
         res.status(400).json({ message: 'Something went wrong' })
       }

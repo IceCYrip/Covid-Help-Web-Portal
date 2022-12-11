@@ -28,35 +28,36 @@ export default function Home() {
       setUserType(user.user.usertype)
     }
 
-    axios.get('http://localhost:4500/api/doctor/getAll').then((res) => {
-      setTable(
-        res.data
-          .map((response, index) => ({
+    axios
+      .get('http://localhost:4500/api/doctor/getAll')
+      .then((res) => {
+        setTable(
+          res.data.map((response, index) => ({
             srNo: index + 1,
             id: response._id,
             doctorName: response.fullName,
             area: response.area,
             contact: response.contact,
           }))
-          .catch((error) => {
-            console.log('error: ', error)
-            sweetAlert({
-              title: 'ERROR!',
-              text: `${error.response.data}`,
-              icon: 'error',
-              buttons: {
-                confirm: {
-                  text: 'OK',
-                  visible: true,
-                  closeModal: true,
-                },
-              },
-              dangerMode: true,
-            })
-          })
-      )
-      setLoading(false)
-    })
+        )
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
   }, [])
 
   const rows = [
@@ -202,6 +203,7 @@ export default function Home() {
                   backgroundColor: '#F92303',
                   color: 'white',
                 },
+                zIndex: 0,
               }}
               autoHeight
               hideFooter

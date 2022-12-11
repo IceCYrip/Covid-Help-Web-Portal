@@ -15,6 +15,7 @@ import {
 } from '@mui/material'
 import Loader from '../../components/Loader'
 import React from 'react'
+import sweetAlert from 'sweetalert'
 
 import axios from 'axios'
 import { CottageSharp, Edit, Search, Visibility } from '@mui/icons-material'
@@ -88,7 +89,7 @@ export default function Home() {
     },
     {
       headerClassName: 'cellColor',
-      field: 'suppName',
+      field: 'fullName',
       headerName: 'Supplier Name',
       // width: 250,
       flex: 1,
@@ -170,7 +171,7 @@ export default function Home() {
           res.data.map((response, index) => ({
             srNo: index + 1,
             id: response._id,
-            suppName: response.suppname,
+            fullName: response.fullName,
             contact: response.contact,
           }))
         )
@@ -179,6 +180,55 @@ export default function Home() {
       })
       .catch((error) => {
         console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
+  }
+
+  const placeOrder = (supplier, order) => {
+    const bodyForApi = {
+      customerId: user.user._id,
+      supplierId: supplier.id,
+      mask: order.mask,
+      remdevisir: order.remdevisir,
+      oxygencylinder: order.oxygencylinder,
+      price: cost(),
+    }
+
+    setOrderModal(false)
+    axios
+      .post('http://localhost:4500/api/order/new', bodyForApi)
+      .then((res) => {
+        sweetAlert({
+          title: `${res.data.title}`,
+          text: `${res.data.message}`,
+          icon: 'success',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+        setLoading(false)
+        setRunAgain(true)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        setLoading(false)
         sweetAlert({
           title: 'ERROR!',
           text: `${error.response.data}`,
@@ -227,7 +277,7 @@ export default function Home() {
                   <span>UPI </span>
                 </div>
                 <div className={styles.modalRight}>
-                  <span>: {supplierDetails.suppName}</span>
+                  <span>: {supplierDetails.fullName}</span>
                   <span>: {supplierDetails.compName}</span>
                   <span>: {supplierDetails.contact}</span>
                   <span>: {supplierDetails.address}</span>
@@ -287,7 +337,7 @@ export default function Home() {
                     <span>Total Cost: </span>
                   </div>
                   <div className={styles.modalRight}>
-                    <span>: {supplierDetails.suppName}</span>
+                    <span>: {supplierDetails.fullName}</span>
                     <span>: {supplierDetails.compName}</span>
                     <span>: {supplierDetails.upi}</span>
                     <span>
@@ -309,7 +359,7 @@ export default function Home() {
                 <button
                   className={styles.customButton}
                   onClick={() => {
-                    setOrderModal(false)
+                    placeOrder(supplierDetails, order)
                   }}
                 >
                   Place Order
