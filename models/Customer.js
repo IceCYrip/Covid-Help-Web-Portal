@@ -5,42 +5,6 @@ const CustomerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  orders: [
-    {
-      suppName: {
-        type: String,
-        required: true,
-      },
-      address: {
-        type: String,
-        required: true,
-      },
-      mask: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-      remdevisir: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-      oxygencylinder: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      status: {
-        type: String,
-        default: 'To be Dispatched',
-      },
-    },
-  ],
-
   contact: {
     type: Number,
     required: true,
@@ -66,6 +30,14 @@ const CustomerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  orders: [
+    {
+      orderID: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
+    },
+  ],
 })
 
 mongoose.models = {}

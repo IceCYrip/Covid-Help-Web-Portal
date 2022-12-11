@@ -45,6 +45,14 @@
   margin-bottom: 20px;
 }
 
+.rowGap {
+  margin-left: 3vw;
+  display: flex;
+  /* flex-wrap: wrap; */
+  column-gap: 3vw;
+  margin-bottom: 20px;
+}
+
 .sortRow {
   width: 100%;
   display: flex;
@@ -133,4 +141,10 @@
   flex-direction: column;
   align-items: center;
   margin-top: 30px;
+}
+
+.boxShadow {
+  background-color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }

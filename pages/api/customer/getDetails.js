@@ -13,7 +13,6 @@ const handler = async (req, res) => {
         pincode: c.pincode,
         uname: c.uname,
         usertype: 'customer',
-        orders: c.orders,
       })
     } catch (error) {
       console.error('Error: ', error.message)

@@ -15,16 +15,15 @@ const handler = async (req, res) => {
         price: req.body.price,
       })
       let createdOrder = await order.save()
+      console.log('Order: ', createdOrder)
 
-      // Updating Customer
-      let customer = await Customer.findById(req.body.customerId)
-      customer.orders.push({ orderID: createdOrder._id })
-      await Customer.findByIdAndUpdate(req.body.customerId, customer)
-
-      // Updating Supplier
       let supplier = await Supplier.findById(req.body.supplierId)
       supplier.orders.push({ orderID: createdOrder._id })
       await Supplier.findByIdAndUpdate(req.body.supplierId, supplier)
+
+      let customer = await Customer.findById(req.body.customerId)
+      customer.orders.push({ orderID: createdOrder._id })
+      await Customer.findByIdAndUpdate(req.body.customerId, customer)
 
       res.status(201).json({ message: 'Order Placed' })
     } catch (error) {

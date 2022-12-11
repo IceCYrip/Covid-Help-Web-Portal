@@ -1,16 +1,67 @@
 import Customer from '../../../models/Customer'
 import Supplier from '../../../models/Supplier'
+import Order from '../../../models/Order'
 import connectmongoDB from '../../../middleware/mongoose'
 
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     try {
       if (req.body._id) {
-        let orders =
-          (await Customer.findById(req.body._id)) ??
-          (await Supplier.findById(req.body._id))
+        let isCustomer = await Customer.findById(req.body._id)
+        let isSupplier = await Supplier.findById(req.body._id)
 
-        res.status(200).send(orders)
+        if (!isCustomer && !isSupplier) {
+          res.status(400).send('Something went Wrong')
+        }
+
+        let orders = await Order.find()
+        let filtered = [],
+          response = [],
+          user = {}
+
+        if (isCustomer) {
+          filtered = orders.filter((obj) => {
+            return obj.customerId == req.body._id
+          })
+          for (let obj of filtered) {
+            user = await Supplier.findById(obj.supplierId)
+            response.push({
+              // customerId: obj.customerId,
+              // supplierId: obj.supplierId,
+              // _id: obj._id,
+              suppName: user.fullName,
+              suppAddress: user.address,
+              mask: obj.mask,
+              remdevisir: obj.remdevisir,
+              oxygencylinder: obj.oxygencylinder,
+              price: obj.price,
+              status: obj.status,
+            })
+          }
+          res.status(200).send(response)
+        } else {
+          filtered = orders.filter((obj) => {
+            return obj.supplierId == req.body._id
+          })
+
+          for (let obj of filtered) {
+            user = await Customer.findById(obj.supplierId)
+            response.push({
+              // customerId: obj.customerId,
+              // supplierId: obj.supplierId,
+              _id: obj._id,
+              custFullName: user.fullName,
+              custAddress: user.address,
+              mask: obj.mask,
+              remdevisir: obj.remdevisir,
+              oxygencylinder: obj.oxygencylinder,
+              price: obj.price,
+              status: obj.status,
+            })
+          }
+          res.status(200).send(response)
+        }
+        res.status(200).send(filtered)
       } else {
         res.status(400).json({ message: 'Something went wrong' })
       }

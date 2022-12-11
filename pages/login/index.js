@@ -41,6 +41,7 @@ const Index = () => {
           const { _id, fullName, usertype } = res.data
           dispatch(login({ _id, fullName, usertype }))
           router.push('/')
+          // setIsLoggingIn(false)
         } else {
           setTimeout(() => {
             setIsLoggingIn(false)
@@ -100,7 +101,7 @@ const Index = () => {
                 type="submit"
               >
                 Login
-                {!isLoggingIn && (
+                {isLoggingIn && (
                   <Image
                     style={{ marginLeft: 10 }}
                     src={loaderSvg}

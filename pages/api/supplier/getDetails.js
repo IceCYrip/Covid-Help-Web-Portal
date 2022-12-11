@@ -8,8 +8,8 @@ const handler = async (req, res) => {
       if (supplier) {
         res.status(200).json({
           id: supplier._id,
-          compName: supplier.compname,
-          suppName: supplier.suppname,
+          compName: supplier.compName,
+          fullName: supplier.fullName,
           contact: supplier.contact,
           pincode: supplier.pincode,
           area: supplier.area,
@@ -19,7 +19,6 @@ const handler = async (req, res) => {
           mask: supplier.mask,
           oxygencylinder: supplier.oxygencylinder,
           remdevisir: supplier.remdevisir,
-          orders: supplier.orders,
           usertype: 'supplier',
         })
       } else {

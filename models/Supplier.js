@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 const SupplierSchema = new mongoose.Schema({
-  compname: {
+  compName: {
     type: String,
   },
 
-  suppname: {
+  fullName: {
     type: String,
   },
   contact: {
@@ -24,19 +24,6 @@ const SupplierSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  uname: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  upi: {
-    type: String,
-    required: true,
-  },
   mask: {
     type: Number,
   },
@@ -46,38 +33,24 @@ const SupplierSchema = new mongoose.Schema({
   oxygencylinder: {
     type: Number,
   },
+  upi: {
+    type: String,
+    required: true,
+  },
+  uname: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
   orders: [
     {
-      customerName: {
-        type: String,
+      orderID: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
-      },
-      address: {
-        type: String,
-        required: true,
-      },
-      mask: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-      remdevisir: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-      oxygencylinder: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      status: {
-        type: String,
-        default: 'To be Dispatched',
       },
     },
   ],

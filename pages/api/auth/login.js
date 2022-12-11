@@ -29,7 +29,7 @@ const handler = async (req, res) => {
           if (supplier.password === req.body.pwd) {
             res.status(200).json({
               _id: supplier._id,
-              fullName: supplier.suppname,
+              fullName: supplier.fullName,
               usertype: 'supplier',
             })
           } else {
