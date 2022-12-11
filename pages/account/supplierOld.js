@@ -49,6 +49,7 @@ const index = () => {
   useEffect(() => {
     setRunAgain(false)
 
+    //Get Supplier Details
     axios
       .post(`http://localhost:4500/api/${user.usertype}/getDetails`, {
         _id: user._id,
@@ -56,16 +57,61 @@ const index = () => {
       .then((res) => {
         reset({ ...res.data })
         dispatch(login({ ...user, fullName: res.data.fullName }))
-        console.log('Response: ', res.data.orders)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
+
+    //Get Orders
+    axios
+      .post(`http://localhost:4500/api/order/getOrders`, {
+        _id: user._id,
+      })
+      .then((res) => {
         setOrders(
-          res.data.orders.map((j, i) => ({
+          res.data.map((j, i) => ({
+            id: i + 1,
             srNo: i + 1,
-            ...j,
-            id: j._id,
+            _id: j._id,
+            custFullName: j.custFullName,
+            custAddress: j.custAddress,
+            mask: j.mask,
+            remdevisir: j.remdevisir,
+            oxygenCylinder: j.oxygencylinder,
+            price: j.price,
+            status: j.status,
           }))
         )
-
         setLoading(false)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
       })
   }, [runAgain])
 
@@ -90,14 +136,14 @@ const index = () => {
     },
     {
       headerClassName: 'cellColor',
-      field: 'customerName',
+      field: 'custFullName',
       headerName: 'Customer Name',
       flex: 0.8,
       sortable: false,
     },
     {
       headerClassName: 'cellColor',
-      field: 'address',
+      field: 'custAddress',
       headerName: 'Customer Address',
       flex: 1,
       sortable: false,
@@ -123,7 +169,7 @@ const index = () => {
     },
     {
       headerClassName: 'cellColor',
-      field: 'oxygencylinder',
+      field: 'oxygenCylinder',
       headerName: (
         <Image
           src={o2SVG}
@@ -239,12 +285,24 @@ const index = () => {
             },
             dangerMode: true,
           })
-
           setRunAgain(true)
         }
       })
       .catch((error) => {
-        console.log('Error:', error.response.data)
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
       })
   }
 

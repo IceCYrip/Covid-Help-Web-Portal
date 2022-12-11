@@ -50,15 +50,20 @@ const Index = () => {
         }
       })
       .catch((error) => {
-        setTimeout(() => {
-          setIsLoggingIn(false)
-        }, 1000)
-
-        if (error.response.status === 400) {
-          window.alert('Wrong Credentials')
-        } else {
-          window.alert('Something went wrong')
-        }
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
       })
   }
 

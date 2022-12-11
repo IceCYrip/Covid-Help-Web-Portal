@@ -26,8 +26,6 @@ const handler = async (req, res) => {
           for (let obj of filtered) {
             user = await Supplier.findById(obj.supplierId)
             response.push({
-              // customerId: obj.customerId,
-              // supplierId: obj.supplierId,
               // _id: obj._id,
               suppName: user.fullName,
               suppAddress: user.address,
@@ -45,10 +43,8 @@ const handler = async (req, res) => {
           })
 
           for (let obj of filtered) {
-            user = await Customer.findById(obj.supplierId)
+            user = await Customer.findById(obj.customerId)
             response.push({
-              // customerId: obj.customerId,
-              // supplierId: obj.supplierId,
               _id: obj._id,
               custFullName: user.fullName,
               custAddress: user.address,

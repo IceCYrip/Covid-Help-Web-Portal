@@ -49,6 +49,7 @@ const index = () => {
   useEffect(() => {
     setRunAgain(false)
 
+    //Get Customer Details
     axios
       .post(`http://localhost:4500/api/${user.usertype}/getDetails`, {
         _id: user._id,
@@ -64,8 +65,61 @@ const index = () => {
             id: j._id,
           }))
         )
-
         setLoading(false)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
+
+    //Get Orders
+    axios
+      .post(`http://localhost:4500/api/order/getOrders`, {
+        _id: user._id,
+      })
+      .then((res) => {
+        setOrders(
+          res.data.map((j, i) => ({
+            id: i + 1,
+            srNo: i + 1,
+            suppName: j.suppName,
+            suppAddress: j.suppAddress,
+            mask: j.mask,
+            remdevisir: j.remdevisir,
+            oxygenCylinder: j.oxygencylinder,
+            price: j.price,
+            status: j.status,
+          }))
+        )
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
       })
   }, [runAgain])
 
@@ -201,7 +255,20 @@ const index = () => {
         }
       })
       .catch((error) => {
-        console.log('Error:', error.response.data)
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
       })
   }
 

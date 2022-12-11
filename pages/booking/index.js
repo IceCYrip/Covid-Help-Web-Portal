@@ -140,6 +140,22 @@ export default function Home() {
 
         setSupplierDetails({ ...res.data })
       })
+      .catch((error) => {
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
   }
 
   const finish = (data) => {
@@ -158,11 +174,24 @@ export default function Home() {
             contact: response.contact,
           }))
         )
-        setTimeout(() => {
-          setLoading(false)
-
-          setRunAgain(true)
-        }, 1000)
+        setLoading(false)
+        setRunAgain(true)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
       })
   }
 
@@ -308,18 +337,18 @@ export default function Home() {
             </h2>
             <form onSubmit={handleSubmit(finish)}>
               <div className={styles.sortRow}>
-                <FormControl variant='standard' error={!!errors.area}>
+                <FormControl variant="standard" error={!!errors.area}>
                   <InputLabel>Area</InputLabel>
                   <Controller
                     render={({ field }) => (
                       <Select
                         sx={{ width: '180px' }}
-                        labelId='demo-simple-select-standard-label'
-                        id='demo-simple-select-standard'
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
                         // value={field.value}
                         value={field.value}
                         onChange={(value) => field.onChange(value)}
-                        label='area'
+                        label="area"
                       >
                         <MenuItem value={'Raigad'}>Raigad</MenuItem>
                         <MenuItem value={'Pen'}>Pen</MenuItem>
@@ -330,9 +359,9 @@ export default function Home() {
                         <MenuItem value={'Shivajinagar'}>Shivajinagar</MenuItem>
                       </Select>
                     )}
-                    name='area'
+                    name="area"
                     control={control}
-                    defaultValue=''
+                    defaultValue=""
                   />
                   <FormHelperText>
                     {errors?.area ? errors.area.message : null}
@@ -341,27 +370,27 @@ export default function Home() {
 
                 <TextField
                   sx={{ width: 150 }}
-                  label='Mask'
-                  variant='standard'
-                  type='number'
+                  label="Mask"
+                  variant="standard"
+                  type="number"
                   {...register('mask')}
                   error={!!errors.mask}
                   helperText={errors?.mask && errors.mask.message}
                 />
                 <TextField
                   sx={{ width: 150 }}
-                  label='Remdevisir'
-                  variant='standard'
-                  type='number'
+                  label="Remdevisir"
+                  variant="standard"
+                  type="number"
                   {...register('remdevisir')}
                   error={!!errors.remdevisir}
                   helperText={errors?.remdevisir && errors.remdevisir.message}
                 />
                 <TextField
                   sx={{ width: 150 }}
-                  label='Oxygen Cylinder'
-                  variant='standard'
-                  type='number'
+                  label="Oxygen Cylinder"
+                  variant="standard"
+                  type="number"
                   {...register('oxygencylinder')}
                   error={!!errors.oxygencylinder}
                   helperText={
@@ -372,7 +401,7 @@ export default function Home() {
                 <button
                   className={styles.customButton}
                   style={{ marginLeft: '1.5vw' }}
-                  type='submit'
+                  type="submit"
                 >
                   <Search sx={{ marginRight: '0.5vw' }} />
                   Search

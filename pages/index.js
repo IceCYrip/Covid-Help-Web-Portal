@@ -30,13 +30,30 @@ export default function Home() {
 
     axios.get('http://localhost:4500/api/doctor/getAll').then((res) => {
       setTable(
-        res.data.map((response, index) => ({
-          srNo: index + 1,
-          id: response._id,
-          doctorName: response.fullName,
-          area: response.area,
-          contact: response.contact,
-        }))
+        res.data
+          .map((response, index) => ({
+            srNo: index + 1,
+            id: response._id,
+            doctorName: response.fullName,
+            area: response.area,
+            contact: response.contact,
+          }))
+          .catch((error) => {
+            console.log('error: ', error)
+            sweetAlert({
+              title: 'ERROR!',
+              text: `${error.response.data}`,
+              icon: 'error',
+              buttons: {
+                confirm: {
+                  text: 'OK',
+                  visible: true,
+                  closeModal: true,
+                },
+              },
+              dangerMode: true,
+            })
+          })
       )
       setLoading(false)
     })
@@ -85,7 +102,6 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'srNo',
       headerName: 'Sr No.',
-      // width: 80,
       flex: 0.5,
       sortable: false,
     },
@@ -93,7 +109,6 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'doctorName',
       headerName: 'Doctor Name',
-      // width: 250,
       flex: 1,
       sortable: false,
     },
@@ -101,7 +116,6 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'area',
       headerName: 'Area',
-      // width: 150,
       flex: 1,
       sortable: false,
     },
@@ -109,7 +123,6 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'contact',
       headerName: 'Contact No.',
-      // width: 150,
       flex: 1,
       sortable: false,
     },
@@ -119,7 +132,6 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'srNo',
       headerName: 'Sr No.',
-      // width: 80,
       flex: 0.5,
       sortable: false,
     },
@@ -127,7 +139,6 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'doctorName',
       headerName: 'Doctor Name',
-      // width: 250,
       flex: 1,
       sortable: false,
     },
@@ -135,7 +146,6 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'area',
       headerName: 'area',
-      // width: 150,
       flex: 1,
       sortable: false,
     },
@@ -143,7 +153,6 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'contact',
       headerName: 'Contact No.',
-      // width: 150,
       flex: 1,
       sortable: false,
     },
@@ -152,7 +161,6 @@ export default function Home() {
       field: 'actions',
       headerName: 'Actions',
       width: 100,
-      // flex: 1,
       sortable: false,
       renderCell: (params) => {
         return (
