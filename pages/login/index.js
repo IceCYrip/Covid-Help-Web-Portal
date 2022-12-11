@@ -51,9 +51,16 @@ const Index = () => {
       })
       .catch((error) => {
         console.log('error: ', error)
+        setIsLoggingIn(false)
         sweetAlert({
-          title: 'ERROR!',
-          text: `${error.response.data}`,
+          title: `${
+            error.response.status === 400 ? 'Incorrent Credentials' : 'ERROR!'
+          }`,
+          text: `${
+            error.response.status === 400
+              ? 'Please enter correct username and password'
+              : 'Something went wrong'
+          }`,
           icon: 'error',
           buttons: {
             confirm: {

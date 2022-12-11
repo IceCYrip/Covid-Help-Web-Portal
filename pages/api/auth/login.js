@@ -40,8 +40,7 @@ const handler = async (req, res) => {
           if (admin.password === req.body.pwd) {
             res.status(200).json({
               _id: admin._id,
-              fullName: 'admin',
-              uname: admin.uname,
+              fullName: admin.fullName,
               usertype: 'admin',
             })
           } else {
