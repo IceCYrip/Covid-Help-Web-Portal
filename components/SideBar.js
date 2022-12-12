@@ -31,7 +31,7 @@ const SideBar = () => {
     {
       name: userType === 'admin' ? 'REPORTS' : 'ACCOUNT',
       // clickTo: `/account/${userType}`,
-      clickTo: `/account/${userType}Old`,
+      clickTo: `/account/${userType}`,
     },
   ]
 

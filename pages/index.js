@@ -17,15 +17,11 @@ export default function Home() {
   // @ts-ignore
   const user = useSelector((state) => state.user)
   const [table, setTable] = useState([])
-  const [userType, setUserType] = useState('')
   const [Loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!user.isLoggedIn) {
       router.push('/login')
-    }
-    if (user.user.usertype) {
-      setUserType(user.user.usertype)
     }
 
     axios
@@ -60,44 +56,6 @@ export default function Home() {
       })
   }, [])
 
-  const rows = [
-    {
-      id: 1,
-      srNo: 1,
-      doctorName: 'Phoebe Buffay',
-      area: 'Viman Nagar',
-      contact: 9503130607,
-    },
-    {
-      id: 2,
-      srNo: 2,
-      doctorName: 'Joey Tribbiani',
-      area: 'Kothrud',
-      contact: 942682441,
-    },
-    {
-      id: 3,
-      srNo: 3,
-      doctorName: 'Chandler Bing',
-      area: 'Pimpri-Chinchwad',
-      contact: 9890822495,
-    },
-    {
-      id: 4,
-      srNo: 4,
-      doctorName: 'Ross Geller',
-      area: 'Baner',
-      contact: 9562210821,
-    },
-    {
-      id: 5,
-      srNo: 5,
-      doctorName: 'Monica Geller',
-      area: 'Aundh',
-      contact: 970051264,
-    },
-  ]
-
   const normalColumns = [
     {
       headerClassName: 'cellColor',
@@ -127,40 +85,13 @@ export default function Home() {
       flex: 1,
       sortable: false,
     },
-  ]
-  const admincolumns = [
-    {
-      headerClassName: 'cellColor',
-      field: 'srNo',
-      headerName: 'Sr No.',
-      flex: 0.5,
-      sortable: false,
-    },
-    {
-      headerClassName: 'cellColor',
-      field: 'doctorName',
-      headerName: 'Doctor Name',
-      flex: 1,
-      sortable: false,
-    },
-    {
-      headerClassName: 'cellColor',
-      field: 'area',
-      headerName: 'area',
-      flex: 1,
-      sortable: false,
-    },
-    {
-      headerClassName: 'cellColor',
-      field: 'contact',
-      headerName: 'Contact No.',
-      flex: 1,
-      sortable: false,
-    },
     {
       headerClassName: 'cellColor',
       field: 'actions',
       headerName: 'Actions',
+      headerAlign: 'center',
+      align: 'center',
+      hide: user.user.usertype == 'admin' ? false : true,
       width: 100,
       sortable: false,
       renderCell: (params) => {
@@ -210,7 +141,7 @@ export default function Home() {
               disableSelectionOnClick
               disableColumnMenu
               rows={table}
-              columns={userType == 'admin' ? admincolumns : normalColumns}
+              columns={normalColumns}
             />
 
             {user.user.usertype == 'customer' && (

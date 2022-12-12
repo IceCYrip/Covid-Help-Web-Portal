@@ -22,6 +22,7 @@ import Image from 'next/image'
 const index = () => {
   const [Loading, setLoading] = useState(true)
   const [runAgain, setRunAgain] = useState(false)
+  const [showOrdersSection, setShowOrdersSection] = useState(false)
   const [orders, setOrders] = useState([])
   // @ts-ignore
   const user = useSelector((state) => state.user.user)
@@ -48,6 +49,7 @@ const index = () => {
   useEffect(() => {
     setRunAgain(false)
 
+    //Get Supplier Details
     axios
       .post(`http://localhost:4500/api/${user.usertype}/getDetails`, {
         _id: user._id,
@@ -55,18 +57,108 @@ const index = () => {
       .then((res) => {
         reset({ ...res.data })
         dispatch(login({ ...user, fullName: res.data.fullName }))
-        console.log('Orders: ', res.data.orders)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
+
+    //Get Orders
+    axios
+      .post(`http://localhost:4500/api/order/getOrders`, {
+        _id: user._id,
+      })
+      .then((res) => {
         setOrders(
-          res.data.orders.map((j, i) => ({
+          res.data.map((j, i) => ({
+            id: i + 1,
             srNo: i + 1,
-            ...j,
-            id: j._id,
+            _id: j._id,
+            custFullName: j.custFullName,
+            custAddress: j.custAddress,
+            mask: j.mask,
+            remdevisir: j.remdevisir,
+            oxygencylinder: j.oxygencylinder,
+            price: j.price,
+            status: j.status,
           }))
         )
-
         setLoading(false)
       })
+      .catch((error) => {
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
   }, [runAgain])
+
+  const updateOrderStatus = (id) => {
+    console.log('ID: ', id)
+    setLoading(true)
+
+    //Update Orders
+    axios
+      .post(`http://localhost:4500/api/order/update`, {
+        orderId: id,
+      })
+      .then((res) => {
+        setLoading(false)
+        sweetAlert({
+          title: `${res.data.title}`,
+          text: `${res.data.message}`,
+          icon: 'success',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+        setRunAgain(true)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+        setLoading(false)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
+      })
+  }
 
   const columns = [
     {
@@ -78,15 +170,15 @@ const index = () => {
     },
     {
       headerClassName: 'cellColor',
-      field: 'suppName',
-      headerName: 'Supplier Name',
+      field: 'custFullName',
+      headerName: 'Customer Name',
       flex: 0.8,
       sortable: false,
     },
     {
       headerClassName: 'cellColor',
-      field: 'address',
-      headerName: 'Supplier Address',
+      field: 'custAddress',
+      headerName: 'Customer Address',
       flex: 1,
       sortable: false,
     },
@@ -167,7 +259,29 @@ const index = () => {
       flex: 1,
       sortable: false,
       renderCell: (params) => {
-        return <>{params.row.status}</>
+        return (
+          <>
+            {params.row.status !== 'Delivered' &&
+              params.row.status !== 'Cancelled' && (
+                <Button
+                  variant="contained"
+                  color="error"
+                  sx={{
+                    backgroundColor: '#F92303',
+                    width: 120,
+                    borderRadius: '15px',
+                  }}
+                  onClick={() => updateOrderStatus(params.row._id)}
+                >
+                  {params.row.status === 'To be Dispatched'
+                    ? 'Dispatch'
+                    : 'Deliver'}
+                </Button>
+              )}
+            {params.row.status === 'Delivered' && 'Delivered'}
+            {params.row.status === 'Cancelled' && 'Cancelled'}
+          </>
+        )
       },
     },
   ]
@@ -195,12 +309,24 @@ const index = () => {
             },
             dangerMode: true,
           })
-
           setRunAgain(true)
         }
       })
       .catch((error) => {
-        console.log('Error:', error.response.data)
+        console.log('error: ', error)
+        sweetAlert({
+          title: 'ERROR!',
+          text: `${error.response.data}`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
+            },
+          },
+          dangerMode: true,
+        })
       })
   }
 
@@ -216,135 +342,228 @@ const index = () => {
           {Loading && <Loader />}
           <div className={styles.Content}>
             <form onSubmit={handleSubmit(finish)}>
-              <div
-                className={styles.boxShadow}
-                style={{
-                  borderRadius: '30px',
-                  marginTop: '-1vh',
-                  paddingTop: '0.1vh',
-                  paddingBottom: '2vh',
-                  paddingBottom: '2vh',
-                }}
-              >
-                <h1
-                  className={styles.TitleText}
-                  style={{ textTransform: 'uppercase' }}
-                >
-                  My Account
-                </h1>
-                <div className={styles.row}>
-                  <TextField
-                    sx={{ width: 300 }}
-                    label="Full Name"
-                    variant="standard"
-                    InputLabelProps={{ shrink: !Loading }}
-                    {...register('fullName')}
-                    error={!!errors.fullName}
-                    helperText={errors?.fullName && errors.fullName.message}
-                  />
-                  <TextField
-                    sx={{ width: 300 }}
-                    label="Contact"
-                    variant="standard"
-                    InputLabelProps={{ shrink: !Loading }}
-                    {...register('contact')}
-                    error={!!errors.contact}
-                    helperText={errors?.contact && errors.contact.message}
-                  />
-                  <TextField
-                    sx={{ width: 300 }}
-                    label="Address"
-                    variant="standard"
-                    InputLabelProps={{ shrink: !Loading }}
-                    {...register('address')}
-                    error={!!errors.address}
-                    helperText={errors?.address && errors.address.message}
-                  />
-                </div>
-                <div className={styles.row}>
-                  <TextField
-                    sx={{ width: 300 }}
-                    label="Pincode"
-                    variant="standard"
-                    InputLabelProps={{ shrink: !Loading }}
-                    {...register('pincode')}
-                    error={!!errors.pincode}
-                    helperText={errors?.pincode && errors.pincode.message}
-                  />
-                  <TextField
-                    sx={{ width: 300 }}
-                    label="Area"
-                    variant="standard"
-                    InputLabelProps={{ shrink: !Loading }}
-                    {...register('area')}
-                    error={!!errors.address}
-                    helperText={errors?.address && errors.address.message}
-                  />
-                  <TextField
-                    sx={{ width: 300 }}
-                    label="Username"
-                    variant="standard"
-                    disabled
-                    InputLabelProps={{ shrink: !Loading }}
-                    {...register('uname')}
-                  />
-                </div>
-
-                <div className={styles.Button}>
-                  <Button
-                    variant="contained"
-                    color="error"
-                    sx={{
-                      backgroundColor: '#F92303',
-                      marginTop: '1.5vh',
-                      // marginBottom: '2vh',
-                      width: 150,
-                      height: 50,
-                      fontSize: 'larger',
-                      borderRadius: '15px',
-                    }}
-                    type="submit"
+              {!showOrdersSection && (
+                <>
+                  <h1
+                    className={styles.TitleText}
+                    style={{ textTransform: 'uppercase' }}
                   >
-                    Save
-                  </Button>
-                </div>
-              </div>
-              <div
-                className={styles.boxShadow}
-                style={{
-                  padding: '0vw 1vw',
-                  paddingTop: '0.1vw',
-                  paddingBottom: '2vw',
-                  marginTop: '2vh',
-                  borderRadius: '30px',
-                }}
-              >
-                <h1
-                  className={styles.TitleText}
+                    My Account
+                  </h1>
+                  <div className={styles.rowGap}>
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Company Name"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('compName')}
+                      error={!!errors.compName}
+                      helperText={errors?.compName && errors.compName.message}
+                    />
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Supplier Name"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('fullName')}
+                      error={!!errors.fullName}
+                      helperText={errors?.fullName && errors.fullName.message}
+                    />
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Contact"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('contact')}
+                      error={!!errors.contact}
+                      helperText={errors?.contact && errors.contact.message}
+                    />
+                  </div>
+                  <div className={styles.rowGap}>
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Pincode"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('pincode')}
+                      error={!!errors.pincode}
+                      helperText={errors?.pincode && errors.pincode.message}
+                    />
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Area"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('area')}
+                      error={!!errors.area}
+                      helperText={errors?.area && errors.area.message}
+                    />
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Address"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('address')}
+                      error={!!errors.address}
+                      helperText={errors?.address && errors.address.message}
+                    />
+                  </div>
+                  <div className={styles.rowGap}>
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Username"
+                      variant="standard"
+                      disabled
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('uname')}
+                    />
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="UPI"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('upi')}
+                      error={!!errors.upi}
+                      helperText={errors?.upi && errors.upi.message}
+                    />
+                  </div>
+                  <h2 style={{ textAlign: 'center', marginTop: '8vh' }}>
+                    STOCK
+                  </h2>
+                  <div className={styles.rowGap}>
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Mask(s)"
+                      type="number"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('mask')}
+                      error={!!errors.mask}
+                      helperText={errors?.mask && errors.mask.message}
+                    />
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Oxygen Cylinder(s)"
+                      type="number"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('oxygencylinder')}
+                      error={!!errors.oxygencylinder}
+                      helperText={
+                        errors?.oxygencylinder && errors.oxygencylinder.message
+                      }
+                    />
+
+                    <TextField
+                      sx={{ width: 300 }}
+                      label="Remdevisir(s)"
+                      type="number"
+                      variant="standard"
+                      InputLabelProps={{ shrink: !Loading }}
+                      {...register('remdevisir')}
+                      error={!!errors.remdevisir}
+                      helperText={
+                        errors?.remdevisir && errors.remdevisir.message
+                      }
+                    />
+                  </div>
+
+                  <div className={styles.Button}>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      sx={{
+                        backgroundColor: '#F92303',
+                        marginTop: '6vh',
+                        // marginBottom: '2vh',
+                        width: 150,
+                        height: 50,
+                        fontSize: 'larger',
+                        borderRadius: '15px',
+                      }}
+                      type="submit"
+                    >
+                      Save
+                    </Button>
+                  </div>
+                  <div className={styles.Button}>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      sx={{
+                        backgroundColor: '#F92303',
+                        marginTop: '2vh',
+                        width: 185,
+                        height: 50,
+                        fontSize: 'larger',
+                        borderRadius: '15px',
+                      }}
+                      onClick={() => {
+                        setShowOrdersSection(true)
+                      }}
+                    >
+                      MY ORDERS
+                    </Button>
+                  </div>
+                </>
+              )}
+              {showOrdersSection && (
+                <div
+                  // className={styles.boxShadow}
                   style={{
-                    textTransform: 'uppercase',
-                    marginBottom: '2vh',
+                    padding: '0vw 1vw',
+                    paddingTop: '0.1vw',
+                    paddingBottom: '2vw',
+                    // marginTop: '2vh',
+                    borderRadius: '30px',
                   }}
                 >
-                  Orders
-                </h1>
-                <DataGrid
-                  sx={{
-                    '& .cellColor': {
-                      backgroundColor: '#F92303',
-                      color: 'white',
-                    },
-                    zIndex: 0,
-                  }}
-                  autoHeight
-                  // hideFooter
-                  disableSelectionOnClick
-                  disableColumnMenu
-                  pageSize={2}
-                  rows={orders}
-                  columns={columns}
-                />
-              </div>
+                  <h1
+                    className={styles.TitleText}
+                    style={{
+                      textTransform: 'uppercase',
+                      marginBottom: '5vh',
+                    }}
+                  >
+                    Orders
+                  </h1>
+                  <DataGrid
+                    sx={{
+                      '& .cellColor': {
+                        backgroundColor: '#F92303',
+                        color: 'white',
+                      },
+                      zIndex: 0,
+                    }}
+                    autoHeight
+                    disableSelectionOnClick
+                    disableColumnMenu
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    rows={orders}
+                    columns={columns}
+                  />
+                  <div className={styles.Button}>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      sx={{
+                        backgroundColor: '#F92303',
+                        marginTop: '5vh',
+                        width: 185,
+                        height: 50,
+                        fontSize: 'larger',
+                        borderRadius: '15px',
+                      }}
+                      onClick={() => {
+                        setShowOrdersSection(false)
+                      }}
+                    >
+                      GO Back
+                    </Button>
+                  </div>
+                </div>
+              )}
             </form>
           </div>
         </div>

@@ -2,7 +2,7 @@ import Admin from '../../../models/Admin'
 import connectmongoDB from '../../../middleware/mongoose'
 
 const handler = async (req, res) => {
-  if (req.method === 'GET') {
+  if (req.method === 'POST') {
     try {
       let admin = await Admin.findById(req.body._id)
       if (admin) {
