@@ -79,7 +79,7 @@ const index = () => {
 
     //Get Orders
     axios
-      .post(`http://localhost:4500/api/order/getOrders`, {
+      .post(`http://localhost:4500/api/admin/reports`, {
         _id: user._id,
       })
       .then((res) => {
