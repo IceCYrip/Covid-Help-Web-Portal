@@ -258,8 +258,8 @@ export default function Home() {
             <Modal>
               <h2
                 style={{
-                  margin: 0,
-                  marginBottom: 20,
+                  marginTop: 15,
+                  marginBottom: 25,
                   textAlign: 'center',
                   textTransform: 'uppercase',
                 }}
@@ -319,7 +319,8 @@ export default function Home() {
                 <h2
                   style={{
                     margin: 0,
-                    marginBottom: 20,
+                    marginTop: 15,
+                    marginBottom: 25,
                     textAlign: 'center',
                     textTransform: 'uppercase',
                   }}

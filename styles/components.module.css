@@ -136,11 +136,11 @@
 }
 
 .modal {
-  padding: 2vw 4vw;
+  padding: 1vw 3vw;
 
   background-color: whitesmoke;
   border-radius: 25px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.24), 0 5px 20px 0 rgba(0, 0, 0, 0.19);
 
-  width: 30vw;
+  /* width: 30vw; */
 }

@@ -54,7 +54,7 @@ const handler = async (req, res) => {
           orderReport.oxygenCylinderSold += obj.oxygencylinder
           orderReport.remdevisirSold += obj.remdevisir
         })
-        orders.totalOrders = orders.length
+        orderReport.totalOrders = orders.length
 
         //Updating stockReport
         suppliers.forEach((obj) => {
