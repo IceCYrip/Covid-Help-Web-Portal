@@ -148,7 +148,7 @@ const index = () => {
         setLoading(false)
         sweetAlert({
           title: 'ERROR!',
-          text: `${error.response.data}`,
+          text: `${error}`,
           icon: 'error',
           buttons: {
             confirm: {

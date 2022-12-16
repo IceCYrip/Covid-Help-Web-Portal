@@ -29,7 +29,7 @@ const index = () => {
         console.log('error: ', error)
         sweetAlert({
           title: 'ERROR!',
-          text: `${error.response.data}`,
+          text: `${error}`,
           icon: 'error',
           buttons: {
             confirm: {
