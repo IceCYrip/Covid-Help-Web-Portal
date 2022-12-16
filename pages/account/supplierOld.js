@@ -509,7 +509,6 @@ const index = () => {
               )}
               {showOrdersSection && (
                 <div
-                  // className={styles.boxShadow}
                   style={{
                     padding: '0vw 1vw',
                     paddingTop: '0.1vw',

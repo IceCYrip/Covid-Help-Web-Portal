@@ -131,9 +131,25 @@ const Index = () => {
             <span>Don't have an account?</span>
             <span>
               Register as a new
-              <span className={styles.registerLinks}> Customer </span>
+              <span
+                className={styles.registerLinks}
+                onClick={() => {
+                  router.push('/register/customer')
+                }}
+              >
+                {' '}
+                Customer{' '}
+              </span>
               or
-              <span className={styles.registerLinks}> Supplier </span>
+              <span
+                className={styles.registerLinks}
+                onClick={() => {
+                  router.push('/register/supplier')
+                }}
+              >
+                {' '}
+                Supplier{' '}
+              </span>
             </span>
           </span>
         </div>

@@ -41,6 +41,7 @@ const index = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     criteriaMode: 'all',
@@ -49,14 +50,13 @@ const index = () => {
 
   useEffect(() => {
     setRunAgain(false)
-
     //Get Customer Details
     axios
       .post(`http://localhost:4500/api/${user.usertype}/getDetails`, {
         _id: user._id,
       })
       .then((res) => {
-        reset({ ...res.data })
+        reset(res.data)
         dispatch(login({ ...user, fullName: res.data.fullName }))
         setLoading(false)
       })
@@ -284,6 +284,7 @@ const index = () => {
   const finish = (data) => {
     const bodyForApi = {
       ...data,
+      fullName: data.fullName.trim(),
       _id: user._id,
     }
 
@@ -445,7 +446,6 @@ const index = () => {
               )}
               {showOrdersSection && (
                 <div
-                  // className={styles.boxShadow}
                   style={{
                     padding: '0vw 1vw',
                     paddingTop: '0.1vw',
