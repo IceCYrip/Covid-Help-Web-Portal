@@ -401,8 +401,8 @@ export default function Home() {
                         onChange={(value) => field.onChange(value)}
                         label="area"
                       >
-                        <MenuItem value={'Raigad'}>Raigad</MenuItem>
-                        <MenuItem value={'Pen'}>Pen</MenuItem>
+                        {/* <MenuItem value={'Raigad'}>Raigad</MenuItem>
+                        <MenuItem value={'Pen'}>Pen</MenuItem> */}
                         <MenuItem value={'Baner'}>Baner</MenuItem>
                         <MenuItem value={'Kothrud'}>Kothrud</MenuItem>
                         <MenuItem value={'Chinchwad'}>Chinchwad</MenuItem>

@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react'
 
-import { Button, IconButton, Paper, TextField } from '@mui/material'
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+} from '@mui/material'
 import Head from 'next/head'
 import SideBar from '../../components/SideBar'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import sweetAlert from 'sweetalert'
@@ -41,7 +51,8 @@ const index = () => {
     register,
     handleSubmit,
     reset,
-    setValue,
+    // setValue,
+    control,
     formState: { errors },
   } = useForm({
     criteriaMode: 'all',
@@ -386,7 +397,7 @@ const index = () => {
                       error={!!errors.pincode}
                       helperText={errors?.pincode && errors.pincode.message}
                     />
-                    <TextField
+                    {/* <TextField
                       sx={{ width: 300 }}
                       label="Area"
                       variant="standard"
@@ -394,7 +405,41 @@ const index = () => {
                       {...register('area')}
                       error={!!errors.address}
                       helperText={errors?.address && errors.address.message}
-                    />
+                    /> */}
+                    <FormControl variant="standard" error={!!errors.area}>
+                      <InputLabel>Area</InputLabel>
+                      <Controller
+                        render={({ field }) => (
+                          <Select
+                            sx={{ width: 230 }}
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                            // value={field.value}
+                            value={field.value}
+                            onChange={(value) => field.onChange(value)}
+                            label="area"
+                          >
+                            {/* <MenuItem value={'Raigad'}>Raigad</MenuItem>
+                        <MenuItem value={'Pen'}>Pen</MenuItem> */}
+                            <MenuItem value={'Baner'}>Baner</MenuItem>
+                            <MenuItem value={'Kothrud'}>Kothrud</MenuItem>
+                            <MenuItem value={'Chinchwad'}>Chinchwad</MenuItem>
+                            <MenuItem value={'Viman Nagar'}>
+                              Viman Nagar
+                            </MenuItem>
+                            <MenuItem value={'Shivajinagar'}>
+                              Shivajinagar
+                            </MenuItem>
+                          </Select>
+                        )}
+                        name="area"
+                        control={control}
+                        defaultValue=""
+                      />
+                      <FormHelperText>
+                        {errors?.area ? errors.area.message : null}
+                      </FormHelperText>
+                    </FormControl>
                     <TextField
                       sx={{ width: 300 }}
                       label="Username"

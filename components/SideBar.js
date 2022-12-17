@@ -58,7 +58,7 @@ const SideBar = () => {
 
         <div className={styles.menu}>
           <span className={styles.name}>
-            Welcome back,
+            Welcome,
             <span
               className={styles.highlightedName}
               onClick={() => {
