@@ -72,9 +72,9 @@ export default function Home() {
   })
 
   useEffect(() => {
-    if (!user.isLoggedIn) {
-      router.push('/login')
-    }
+    // if (!user.isLoggedIn) {
+    //   router.push('/login')
+    // }
     setRunAgain(false)
   }, [runAgain])
 
@@ -197,52 +197,71 @@ export default function Home() {
   }
 
   const placeOrder = (supplier, order) => {
-    const bodyForApi = {
-      customerId: user.user._id,
-      supplierId: supplier.id,
-      mask: order.mask,
-      remdevisir: order.remdevisir,
-      oxygencylinder: order.oxygencylinder,
-      price: cost(),
-    }
+    if (user.user.usertype !== 'customer') {
+      setOrderModal(false)
+      sweetAlert({
+        title: 'Login Not Found!',
+        text: 'Please Login to place an order',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            text: 'OK',
+            visible: true,
+            closeModal: true,
+          },
+        },
+        dangerMode: true,
+      }).then(() => {
+        router.push('/login')
+      })
+    } else {
+      const bodyForApi = {
+        customerId: user.user._id,
+        supplierId: supplier.id,
+        mask: order.mask,
+        remdevisir: order.remdevisir,
+        oxygencylinder: order.oxygencylinder,
+        price: cost(),
+      }
 
-    setOrderModal(false)
-    axios
-      .post('http://localhost:4500/api/order/new', bodyForApi)
-      .then((res) => {
-        sweetAlert({
-          title: `${res.data.title}`,
-          text: `${res.data.message}`,
-          icon: 'success',
-          buttons: {
-            confirm: {
-              text: 'OK',
-              visible: true,
-              closeModal: true,
+      setOrderModal(false)
+      axios
+        .post('http://localhost:4500/api/order/new', bodyForApi)
+        .then((res) => {
+          sweetAlert({
+            title: `${res.data.title}`,
+            text: `${res.data.message}`,
+            icon: 'success',
+            buttons: {
+              confirm: {
+                text: 'OK',
+                visible: true,
+                closeModal: true,
+              },
             },
-          },
-          dangerMode: true,
+            dangerMode: true,
+          })
+          setLoading(false)
+          setRunAgain(true)
         })
-        setLoading(false)
-        setRunAgain(true)
-      })
-      .catch((error) => {
-        console.log('error: ', error)
-        setLoading(false)
-        sweetAlert({
-          title: 'ERROR!',
-          text: `${error}`,
-          icon: 'error',
-          buttons: {
-            confirm: {
-              text: 'OK',
-              visible: true,
-              closeModal: true,
+        .catch((error) => {
+          console.log('error: ', error)
+          setLoading(false)
+          sweetAlert({
+            title: 'ERROR!',
+            text: `${error}`,
+            icon: 'error',
+            buttons: {
+              confirm: {
+                text: 'OK',
+                visible: true,
+                closeModal: true,
+              },
             },
-          },
-          dangerMode: true,
+            dangerMode: true,
+          })
         })
-      })
+    }
   }
 
   return (

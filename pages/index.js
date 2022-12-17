@@ -45,9 +45,9 @@ export default function Home() {
 
   useEffect(() => {
     setRunAgain(false)
-    if (!user.isLoggedIn) {
-      router.push('/login')
-    }
+    // if (!user.isLoggedIn) {
+    //   router.push('/login')
+    // }
     if (user.user.usertype) {
       setUserType(user.user.usertype)
     }
@@ -259,19 +259,20 @@ export default function Home() {
               columns={normalColumns}
             />
 
-            {user.user.usertype == 'customer' && (
-              <div className={styles.Button}>
-                <div
-                  className={styles.customButton}
-                  style={{ marginTop: '8vh', textTransform: 'uppercase' }}
-                  onClick={() => {
-                    router.push('/booking')
-                  }}
-                >
-                  Order Supplies
+            {user.user.usertype !== 'supplier' &&
+              user.user.usertype !== 'admin' && (
+                <div className={styles.Button}>
+                  <div
+                    className={styles.customButton}
+                    style={{ marginTop: '8vh', textTransform: 'uppercase' }}
+                    onClick={() => {
+                      router.push('/booking')
+                    }}
+                  >
+                    Order Supplies
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </div>
       </div>

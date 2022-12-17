@@ -10,16 +10,24 @@ const SideBar = () => {
   const dispatch = useDispatch()
   // @ts-ignore
   const userData = useSelector((state) => state.user.user)
+  // @ts-ignore
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
 
   const [name, setName] = useState('')
   const [userType, setUserType] = useState('')
+  const [loginState, setLoginState] = useState(false)
 
   useEffect(() => {
     if (userData.fullName) {
       setName(userData.fullName.split(' ')[0])
+      setLoginState(isLoggedIn)
+    } else {
+      setName('User')
     }
     if (userData.usertype) {
       setUserType(userData.usertype)
+    } else {
+      setUserType('user')
     }
   }, [userData])
 
@@ -31,7 +39,7 @@ const SideBar = () => {
     {
       name: userType === 'admin' ? 'REPORTS' : 'ACCOUNT',
       // clickTo: `/account/${userType}`,
-      clickTo: `/account/${userType}`,
+      clickTo: userType === 'user' ? 'login' : `/account/${userType}`,
     },
   ]
 
@@ -82,17 +90,31 @@ const SideBar = () => {
             )
           })}
         </div>
-        <div className={styles.footer}>
-          <div
-            className={styles.logout}
-            onClick={() => {
-              dispatch(logout())
-              router.push('/login')
-            }}
-          >
-            <span>LOGOUT</span>
+        {loginState && (
+          <div className={styles.footer}>
+            <div
+              className={styles.logout}
+              onClick={() => {
+                dispatch(logout())
+                router.push('/login')
+              }}
+            >
+              <span>LOGOUT</span>
+            </div>
           </div>
-        </div>
+        )}
+        {!loginState && (
+          <div className={styles.footer}>
+            <div
+              className={styles.logout}
+              onClick={() => {
+                router.push('/login')
+              }}
+            >
+              <span>LOGIN</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

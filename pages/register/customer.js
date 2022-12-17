@@ -124,38 +124,38 @@ const customer = () => {
                       },
                     },
                     dangerMode: true,
+                  }).then(() => {
+                    axios
+                      .post('http://localhost:4500/api/auth/login', {
+                        uname: data.uname,
+                        pwd: data.password,
+                      })
+                      .then((res) => {
+                        if (res.status === 200) {
+                          setLoading(true)
+                          const { _id, fullName, usertype } = res.data
+                          dispatch(login({ _id, fullName, usertype }))
+                          router.push('/')
+                        }
+                      })
+                      .catch((error) => {
+                        console.log('error: ', error)
+                        sweetAlert({
+                          title: 'Error',
+                          text: 'Something went wrong',
+                          icon: 'error',
+                          buttons: {
+                            confirm: {
+                              text: 'OK',
+                              visible: true,
+                              closeModal: true,
+                            },
+                          },
+                          dangerMode: true,
+                        })
+                      })
                   })
                 }
-
-                axios
-                  .post('http://localhost:4500/api/auth/login', {
-                    uname: data.uname,
-                    pwd: data.password,
-                  })
-                  .then((res) => {
-                    if (res.status === 200) {
-                      setLoading(true)
-                      const { _id, fullName, usertype } = res.data
-                      dispatch(login({ _id, fullName, usertype }))
-                      router.push('/')
-                    }
-                  })
-                  .catch((error) => {
-                    console.log('error: ', error)
-                    sweetAlert({
-                      title: 'Error',
-                      text: 'Something went wrong',
-                      icon: 'error',
-                      buttons: {
-                        confirm: {
-                          text: 'OK',
-                          visible: true,
-                          closeModal: true,
-                        },
-                      },
-                      dangerMode: true,
-                    })
-                  })
               })
               .catch((error) => {
                 sweetAlert({
@@ -324,9 +324,30 @@ const customer = () => {
                   }}
                   type="submit"
                 >
-                  Save
+                  CREATE
                 </Button>
               </div>
+              <h3
+                style={{
+                  textAlign: 'center',
+
+                  marginTop: '4vh',
+                }}
+              >
+                Already have an account?{' '}
+                <span
+                  style={{
+                    color: 'red',
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    router.push('/login')
+                  }}
+                >
+                  Sign in
+                </span>
+              </h3>
             </form>
           </div>
         </div>
