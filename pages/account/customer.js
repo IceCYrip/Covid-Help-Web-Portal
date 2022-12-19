@@ -64,7 +64,7 @@ const Index = () => {
     //Get Customer Details
     axios
       // .post(`http://localhost:4500/api/${user.usertype}/getDetails`, {
-      .post(`${process.env.BASE_URL}/api/${user.usertype}/getDetails`, {
+      .post(`${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/getDetails`, {
         _id: user._id,
       })
       .then((res) => {
@@ -92,7 +92,7 @@ const Index = () => {
     //Get Orders
     axios
       // .post(`http://localhost:4500/api/order/getOrders`, {
-      .post(`${process.env.BASE_URL}/api/order/getOrders`, {
+      .post(`${process.env.NEXT_PUBLIC_HOST}/api/order/getOrders`, {
         _id: user._id,
       })
       .then((res) => {
@@ -139,7 +139,7 @@ const Index = () => {
     //Update Orders
     axios
       // .post(`http://localhost:4500/api/order/update`, bodyForApi)
-      .post(`${process.env.BASE_URL}/api/order/update`, bodyForApi)
+      .post(`${process.env.NEXT_PUBLIC_HOST}/api/order/update`, bodyForApi)
       .then((res) => {
         setLoading(false)
         sweetAlert({
@@ -304,7 +304,10 @@ const Index = () => {
 
     axios
       // .post(`http://localhost:4500/api/${user.usertype}/save`, bodyForApi)
-      .post(`${process.env.BASE_URL}/api/${user.usertype}/save`, bodyForApi)
+      .post(
+        `${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/save`,
+        bodyForApi
+      )
       .then((res) => {
         if (res.status === 200) {
           sweetAlert({

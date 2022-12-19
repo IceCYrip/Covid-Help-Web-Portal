@@ -55,7 +55,7 @@ export default function Home() {
     axios
       .get(
         // 'http://localhost:4500/api/doctor/getAll',
-        'https://covid-help-web-portal.vercel.app/api/doctor/getAll'
+        `${process.env.NEXT_PUBLIC_HOST}/api/doctor/getAll`
         // {},
         // {
         //   headers: {
@@ -160,7 +160,7 @@ export default function Home() {
     const bodyForApi = { ...data, _id: ID }
 
     axios
-      .post(`http://localhost:4500/api/doctor/save`, bodyForApi)
+      .post(`${process.env.NEXT_PUBLIC_HOST}/api/doctor/save`, bodyForApi)
       .then((res) => {
         if (res.status === 200) {
           sweetAlert({

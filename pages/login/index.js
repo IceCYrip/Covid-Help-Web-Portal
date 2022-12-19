@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from '../../styles/login.module.css'
 import { login } from '../../redux/slices/UserSlice'
@@ -34,12 +34,13 @@ const Index = () => {
   })
 
   const finish = (data) => {
+    console.log('Env Variable: ', process.env.NEXT_PUBLIC_HOST)
     setIsLoggingIn(true)
     axios
       // .post('http://localhost:4500/api/auth/login', data)
       .post(
         // 'https://covid-help-web-portal.vercel.app/api/auth/login',
-        `${process.env.BASE_URL}/api/auth/login`,
+        `${process.env.NEXT_PUBLIC_HOST}/api/auth/login`,
         data
         // {
         //   headers: {

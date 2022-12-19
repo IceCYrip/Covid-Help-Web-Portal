@@ -135,7 +135,9 @@ export default function Home() {
   const fetchSupplier = (id) => {
     setSupplierModal(true)
     axios
-      .post('http://localhost:4500/api/supplier/getDetails', { _id: id })
+      .post(`${process.env.NEXT_PUBLIC_HOST}/api/supplier/getDetails`, {
+        _id: id,
+      })
       .then((res) => {
         console.log('Supplier: ', res.data)
 
@@ -164,7 +166,7 @@ export default function Home() {
     console.log('Sort cha Data: ', data)
     setOrder(data)
     axios
-      .post('http://localhost:4500/api/supplier/sortSuppliers', data)
+      .post(`${process.env.NEXT_PUBLIC_HOST}/api/supplier/sortSuppliers`, data)
       .then((res) => {
         console.log('Response: ', res.data)
         setTable(
@@ -226,7 +228,7 @@ export default function Home() {
 
       setOrderModal(false)
       axios
-        .post('http://localhost:4500/api/order/new', bodyForApi)
+        .post(`${process.env.NEXT_PUBLIC_HOST}/api/order/new`, bodyForApi)
         .then((res) => {
           sweetAlert({
             title: `${res.data.title}`,
