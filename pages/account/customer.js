@@ -91,7 +91,6 @@ const Index = () => {
 
     //Get Orders
     axios
-      // .post(`http://localhost:4500/api/order/getOrders`, {
       .post(`${process.env.NEXT_PUBLIC_HOST}/api/order/getOrders`, {
         _id: user._id,
       })
