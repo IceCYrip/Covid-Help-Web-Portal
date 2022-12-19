@@ -55,13 +55,13 @@ export default function Home() {
     axios
       .get(
         // 'http://localhost:4500/api/doctor/getAll',
-        'https://covid-help-web-portal.vercel.app/api/doctor/getAll',
-        {},
-        {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
-        }
+        'https://covid-help-web-portal.vercel.app/api/doctor/getAll'
+        // {},
+        // {
+        //   headers: {
+        //     'Access-Control-Allow-Origin': '*',
+        //   },
+        // }
       )
       .then((res) => {
         setTable(
