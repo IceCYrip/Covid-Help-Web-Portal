@@ -128,7 +128,7 @@ const Index = () => {
           </form>
 
           <span className={styles.register}>
-            <span>Don't have an account?</span>
+            <span>{`Don't have an account?`}</span>
             <span>
               Register as a new
               <span

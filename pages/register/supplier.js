@@ -21,7 +21,7 @@ import { useDispatch } from 'react-redux'
 import { login } from '../../redux/slices/UserSlice'
 import router from 'next/router'
 
-const supplier = () => {
+const Supplier = () => {
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
@@ -465,4 +465,4 @@ const supplier = () => {
   )
 }
 
-export default supplier
+export default Supplier

@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form'
 import { Button, TextField } from '@mui/material'
 import { login } from '../../redux/slices/UserSlice'
 
-const index = () => {
+const Index = () => {
   const [Loading, setLoading] = useState(true)
   const [runAgain, setRunAgain] = useState(false)
   const [reports, setReports] = useState()
@@ -393,4 +393,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

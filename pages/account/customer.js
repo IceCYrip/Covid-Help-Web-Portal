@@ -30,7 +30,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import Image from 'next/image'
 import { Delete } from '@mui/icons-material'
 
-const index = () => {
+const Index = () => {
   const [Loading, setLoading] = useState(true)
   const [runAgain, setRunAgain] = useState(false)
   const [showOrdersSection, setShowOrdersSection] = useState(false)
@@ -552,4 +552,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

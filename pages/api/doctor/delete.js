@@ -1,4 +1,4 @@
-import Doctors from '../../../models/Doctors'
+import Doctors from '../../../models/Doctor'
 import connectmongoDB from '../../../middleware/mongoose'
 
 const handler = async (req, res) => {
