@@ -12,6 +12,7 @@ import * as yup from 'yup'
 import { router } from 'next/router'
 import axios from 'axios'
 import loaderSvg from '../../public/loginLoader.svg'
+import sweetAlert from 'sweetalert'
 
 const Index = () => {
   const dispatch = useDispatch()
