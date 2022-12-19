@@ -37,7 +37,11 @@ const Index = () => {
     setIsLoggingIn(true)
     axios
       // .post('http://localhost:4500/api/auth/login', data)
-      .post('https://covid-help-web-portal.vercel.app/api/auth/login', data)
+      .post('https://covid-help-web-portal.vercel.app/api/auth/login', data, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      })
       .then((res) => {
         if (res.status === 200) {
           const { _id, fullName, usertype } = res.data
