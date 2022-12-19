@@ -64,12 +64,9 @@ const Index = () => {
     //Get Customer Details
     axios
       // .post(`http://localhost:4500/api/${user.usertype}/getDetails`, {
-      .post(
-        `https://covid-help-web-portal.vercel.app/api/${user.usertype}/getDetails`,
-        {
-          _id: user._id,
-        }
-      )
+      .post(`${process.env.BASE_URL}/api/${user.usertype}/getDetails`, {
+        _id: user._id,
+      })
       .then((res) => {
         reset(res.data)
         dispatch(login({ ...user, fullName: res.data.fullName }))
@@ -95,7 +92,7 @@ const Index = () => {
     //Get Orders
     axios
       // .post(`http://localhost:4500/api/order/getOrders`, {
-      .post(`https://covid-help-web-portal.vercel.app/api/order/getOrders`, {
+      .post(`${process.env.BASE_URL}/api/order/getOrders`, {
         _id: user._id,
       })
       .then((res) => {
@@ -142,10 +139,7 @@ const Index = () => {
     //Update Orders
     axios
       // .post(`http://localhost:4500/api/order/update`, bodyForApi)
-      .post(
-        `https://covid-help-web-portal.vercel.app/api/order/update`,
-        bodyForApi
-      )
+      .post(`${process.env.BASE_URL}/api/order/update`, bodyForApi)
       .then((res) => {
         setLoading(false)
         sweetAlert({
@@ -310,10 +304,7 @@ const Index = () => {
 
     axios
       // .post(`http://localhost:4500/api/${user.usertype}/save`, bodyForApi)
-      .post(
-        `https://covid-help-web-portal.vercel.app/api/${user.usertype}/save`,
-        bodyForApi
-      )
+      .post(`${process.env.BASE_URL}/api/${user.usertype}/save`, bodyForApi)
       .then((res) => {
         if (res.status === 200) {
           sweetAlert({
