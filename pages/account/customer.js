@@ -63,7 +63,6 @@ const Index = () => {
     setRunAgain(false)
     //Get Customer Details
     axios
-      // .post(`http://localhost:4500/api/${user.usertype}/getDetails`, {
       .post(`${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/getDetails`, {
         _id: user._id,
       })
@@ -137,7 +136,6 @@ const Index = () => {
 
     //Update Orders
     axios
-      // .post(`http://localhost:4500/api/order/update`, bodyForApi)
       .post(`${process.env.NEXT_PUBLIC_HOST}/api/order/update`, bodyForApi)
       .then((res) => {
         setLoading(false)
@@ -302,7 +300,6 @@ const Index = () => {
     }
 
     axios
-      // .post(`http://localhost:4500/api/${user.usertype}/save`, bodyForApi)
       .post(
         `${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/save`,
         bodyForApi

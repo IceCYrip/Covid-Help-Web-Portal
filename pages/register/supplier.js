@@ -130,13 +130,16 @@ const Supplier = () => {
       const bodyForAPI = { ...rest }
 
       axios
-        .post('http://localhost:4500/api/auth/checkAvailability', {
+        .post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/checkAvailability`, {
           uname: data.uname,
         })
         .then((res) => {
           if (res.status === 200) {
             axios
-              .post('http://localhost:4500/api/supplier/save', bodyForAPI)
+              .post(
+                `${process.env.NEXT_PUBLIC_HOST}/api/supplier/save`,
+                bodyForAPI
+              )
               .then((res) => {
                 if (res.status === 201) {
                   sweetAlert({
@@ -153,7 +156,7 @@ const Supplier = () => {
                     dangerMode: true,
                   }).then(() => {
                     axios
-                      .post('http://localhost:4500/api/auth/login', {
+                      .post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login`, {
                         uname: data.uname,
                         pwd: data.password,
                       })

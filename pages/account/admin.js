@@ -41,7 +41,7 @@ const Index = () => {
 
     //Get Admin Details
     axios
-      .post(`http://localhost:4500/api/${user.usertype}/getDetails`, {
+      .post(`${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/getDetails`, {
         _id: user._id,
       })
       .then((res) => {
@@ -68,7 +68,7 @@ const Index = () => {
 
     //Get Reports
     axios
-      .post('http://localhost:4500/api/admin/reports', {
+      .post(`${process.env.NEXT_PUBLIC_HOST}/api/admin/reports`, {
         _id: user._id,
       })
       .then((res) => {
@@ -101,7 +101,10 @@ const Index = () => {
     }
 
     axios
-      .post(`http://localhost:4500/api/${user.usertype}/save`, bodyForApi)
+      .post(
+        `${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/save`,
+        bodyForApi
+      )
       .then((res) => {
         if (res.status === 200) {
           sweetAlert({

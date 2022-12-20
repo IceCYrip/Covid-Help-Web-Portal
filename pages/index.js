@@ -53,16 +53,7 @@ export default function Home() {
     }
 
     axios
-      .get(
-        // 'http://localhost:4500/api/doctor/getAll',
-        `${process.env.NEXT_PUBLIC_HOST}/api/doctor/getAll`
-        // {},
-        // {
-        //   headers: {
-        //     'Access-Control-Allow-Origin': '*',
-        //   },
-        // }
-      )
+      .get(`${process.env.NEXT_PUBLIC_HOST}/api/doctor/getAll`)
       .then((res) => {
         setTable(
           res.data.map((response, index) => ({
