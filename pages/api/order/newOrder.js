@@ -15,7 +15,6 @@ const handler = async (req, res) => {
         price: req.body.price,
       })
       let createdOrder = await order.save()
-      console.log('Order: ', createdOrder)
 
       let supplier = await Supplier.findById(req.body.supplierId)
       supplier.orders.push({ orderID: createdOrder._id })

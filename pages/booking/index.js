@@ -139,8 +139,6 @@ export default function Home() {
         _id: id,
       })
       .then((res) => {
-        console.log('Supplier: ', res.data)
-
         setSupplierDetails({ ...res.data })
       })
       .catch((error) => {
@@ -163,12 +161,10 @@ export default function Home() {
 
   const finish = (data) => {
     setLoading(true)
-    console.log('Sort cha Data: ', data)
     setOrder(data)
     axios
       .post(`${process.env.NEXT_PUBLIC_HOST}/api/supplier/sortSuppliers`, data)
       .then((res) => {
-        console.log('Response: ', res.data)
         setTable(
           res.data.map((response, index) => ({
             srNo: index + 1,

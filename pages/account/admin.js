@@ -72,7 +72,6 @@ const Index = () => {
         _id: user._id,
       })
       .then((res) => {
-        console.log('Reports: ', res.data)
         setReports(res.data)
         setLoading(false)
       })
@@ -95,8 +94,6 @@ const Index = () => {
   }, [runAgain])
 
   const finish = (data) => {
-    console.log('Data: ', data)
-
     const bodyForApi = {
       ...data,
       fullName: data.fullName.trim(),

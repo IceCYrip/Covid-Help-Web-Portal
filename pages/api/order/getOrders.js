@@ -35,7 +35,7 @@ const handler = async (req, res) => {
                 status: obj.status,
               })
             }
-            res.status(200).send(response)
+            // res.status(200).send(response)
           } else {
             filtered = orders.filter((obj) => {
               return obj.supplierId == req.body._id
@@ -54,8 +54,8 @@ const handler = async (req, res) => {
                 status: obj.status,
               })
             }
-            res.status(200).send(response)
           }
+
           res.status(200).send(filtered)
         }
       } else {

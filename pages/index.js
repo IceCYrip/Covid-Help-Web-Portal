@@ -144,7 +144,6 @@ export default function Home() {
   ]
 
   const editDoctor = (data) => {
-    console.log('Doctor: ', data)
     setID(data.id)
     setDoctorModal(true)
     reset({

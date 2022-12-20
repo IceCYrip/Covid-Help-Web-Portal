@@ -126,7 +126,6 @@ const Index = () => {
   }, [runAgain])
 
   const updateOrderStatus = (id) => {
-    console.log('ID: ', id)
     setLoading(true)
 
     //Update Orders

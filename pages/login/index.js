@@ -34,7 +34,6 @@ const Index = () => {
   })
 
   const finish = (data) => {
-    console.log('Env Variable: ', process.env.NEXT_PUBLIC_HOST)
     setIsLoggingIn(true)
     axios
       // .post('http://localhost:4500/api/auth/login', data)
@@ -58,7 +57,6 @@ const Index = () => {
           setTimeout(() => {
             setIsLoggingIn(false)
           }, 1000)
-          console.log(res.data.message)
         }
       })
       .catch((error) => {

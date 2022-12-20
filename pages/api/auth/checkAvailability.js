@@ -10,8 +10,6 @@ const handler = async (req, res) => {
       let customer = await Customer.findOne({ uname: req.body.uname })
       let supplier = await Supplier.findOne({ uname: req.body.uname })
 
-      console.log('Customer: ', customer)
-
       if (!admin && !customer && !supplier) {
         res.status(200).json({ message: 'Username Available' })
       } else {
