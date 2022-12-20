@@ -61,71 +61,93 @@ const Index = () => {
 
   useEffect(() => {
     setRunAgain(false)
-    //Get Customer Details
-    axios
-      .post(`${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/getDetails`, {
-        _id: user._id,
-      })
-      .then((res) => {
-        reset(res.data)
-        dispatch(login({ ...user, fullName: res.data.fullName }))
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.log('error: ', error)
-        sweetAlert({
-          title: 'ERROR!',
-          text: `${error}`,
-          icon: 'error',
-          buttons: {
-            confirm: {
-              text: 'OK',
-              visible: true,
-              closeModal: true,
-            },
-          },
-          dangerMode: true,
-        })
-      })
 
-    //Get Orders
-    axios
-      .post(`${process.env.NEXT_PUBLIC_HOST}/api/order/getOrders`, {
-        _id: user._id,
-      })
-      .then((res) => {
-        setOrders(
-          res.data.map((j, i) => ({
-            id: i + 1,
-            srNo: i + 1,
-            _id: j._id,
-            suppName: j.suppName,
-            suppAddress: j.suppAddress,
-            mask: j.mask,
-            remdevisir: j.remdevisir,
-            oxygencylinder: j.oxygencylinder,
-            price: j.price,
-            status: j.status,
-          }))
+    if (user) {
+      //Get Customer Details
+      axios
+        .post(
+          `${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/getDetails`,
+          {
+            _id: user._id,
+          }
         )
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.log('error: ', error)
-        sweetAlert({
-          title: 'ERROR!',
-          text: `${error}`,
-          icon: 'error',
-          buttons: {
-            confirm: {
-              text: 'OK',
-              visible: true,
-              closeModal: true,
-            },
-          },
-          dangerMode: true,
+        .then((res) => {
+          reset(res.data)
+          dispatch(login({ ...user, fullName: res.data.fullName }))
+          setLoading(false)
         })
+        .catch((error) => {
+          console.log('error: ', error)
+          sweetAlert({
+            title: 'ERROR!',
+            text: `${error}`,
+            icon: 'error',
+            buttons: {
+              confirm: {
+                text: 'OK',
+                visible: true,
+                closeModal: true,
+              },
+            },
+            dangerMode: true,
+          })
+        })
+
+      //Get Orders
+      axios
+        .post(`${process.env.NEXT_PUBLIC_HOST}/api/order/getOrders`, {
+          _id: user._id,
+        })
+        .then((res) => {
+          setOrders(
+            res.data.map((j, i) => ({
+              id: i + 1,
+              srNo: i + 1,
+              _id: j._id,
+              suppName: j.suppName,
+              suppAddress: j.suppAddress,
+              mask: j.mask,
+              remdevisir: j.remdevisir,
+              oxygencylinder: j.oxygencylinder,
+              price: j.price,
+              status: j.status,
+            }))
+          )
+          setLoading(false)
+        })
+        .catch((error) => {
+          console.log('error: ', error)
+          sweetAlert({
+            title: 'ERROR!',
+            text: `${error}`,
+            icon: 'error',
+            buttons: {
+              confirm: {
+                text: 'OK',
+                visible: true,
+                closeModal: true,
+              },
+            },
+            dangerMode: true,
+          })
+        })
+    } else {
+      sweetAlert({
+        title: 'Login Not Found!',
+        text: 'Please Login to place an order',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            text: 'OK',
+            visible: true,
+            closeModal: true,
+          },
+        },
+        dangerMode: true,
+      }).then(() => {
+        router.push('/login')
       })
+    }
   }, [runAgain])
 
   const cancelOrder = (index) => {
@@ -183,14 +205,14 @@ const Index = () => {
     },
     {
       headerClassName: 'cellColor',
-      field: 'suppName',
+      field: 'fullName',
       headerName: 'Supplier Name',
       flex: 0.8,
       sortable: false,
     },
     {
       headerClassName: 'cellColor',
-      field: 'suppAddress',
+      field: 'address',
       headerName: 'Supplier Address',
       flex: 1,
       sortable: false,

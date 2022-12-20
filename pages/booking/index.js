@@ -72,9 +72,6 @@ export default function Home() {
   })
 
   useEffect(() => {
-    // if (!user.isLoggedIn) {
-    //   router.push('/login')
-    // }
     setRunAgain(false)
   }, [runAgain])
 
@@ -84,14 +81,12 @@ export default function Home() {
       field: 'srNo',
       headerName: 'Sr No.',
       width: 80,
-      // flex: 0.5,
       sortable: false,
     },
     {
       headerClassName: 'cellColor',
       field: 'fullName',
       headerName: 'Supplier Name',
-      // width: 250,
       flex: 1,
       sortable: false,
     },
@@ -99,7 +94,6 @@ export default function Home() {
       headerClassName: 'cellColor',
       field: 'contact',
       headerName: 'Contact',
-      // width: 150,
       flex: 1,
       sortable: false,
     },
@@ -109,7 +103,6 @@ export default function Home() {
       field: 'actions',
       headerName: 'Actions',
       width: 100,
-      // flex: 1,
       sortable: false,
       renderCell: (params) => {
         return (

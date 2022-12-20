@@ -38,59 +38,79 @@ const Index = () => {
 
   useEffect(() => {
     setRunAgain(false)
-
-    //Get Admin Details
-    axios
-      .post(`${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/getDetails`, {
-        _id: user._id,
-      })
-      .then((res) => {
-        reset(res.data)
-        dispatch(login({ ...user, fullName: res.data.fullName }))
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.log('error: ', error)
-        sweetAlert({
-          title: 'ERROR!',
-          text: `${error}`,
-          icon: 'error',
-          buttons: {
-            confirm: {
-              text: 'OK',
-              visible: true,
-              closeModal: true,
-            },
-          },
-          dangerMode: true,
+    if (user) {
+      //Get Admin Details
+      axios
+        .post(
+          `${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/getDetails`,
+          {
+            _id: user._id,
+          }
+        )
+        .then((res) => {
+          reset(res.data)
+          dispatch(login({ ...user, fullName: res.data.fullName }))
+          setLoading(false)
         })
-      })
-
-    //Get Reports
-    axios
-      .post(`${process.env.NEXT_PUBLIC_HOST}/api/admin/reports`, {
-        _id: user._id,
-      })
-      .then((res) => {
-        setReports(res.data)
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.log('error: ', error)
-        sweetAlert({
-          title: 'ERROR!',
-          text: `${error}`,
-          icon: 'error',
-          buttons: {
-            confirm: {
-              text: 'OK',
-              visible: true,
-              closeModal: true,
+        .catch((error) => {
+          console.log('error: ', error)
+          sweetAlert({
+            title: 'ERROR!',
+            text: `${error}`,
+            icon: 'error',
+            buttons: {
+              confirm: {
+                text: 'OK',
+                visible: true,
+                closeModal: true,
+              },
             },
-          },
-          dangerMode: true,
+            dangerMode: true,
+          })
         })
+
+      //Get Reports
+      axios
+        .post(`${process.env.NEXT_PUBLIC_HOST}/api/admin/reports`, {
+          _id: user._id,
+        })
+        .then((res) => {
+          setReports(res.data)
+          setLoading(false)
+        })
+        .catch((error) => {
+          console.log('error: ', error)
+          sweetAlert({
+            title: 'ERROR!',
+            text: `${error}`,
+            icon: 'error',
+            buttons: {
+              confirm: {
+                text: 'OK',
+                visible: true,
+                closeModal: true,
+              },
+            },
+            dangerMode: true,
+          })
+        })
+    } else {
+      sweetAlert({
+        title: 'Login Not Found!',
+        text: 'Please Login to place an order',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            text: 'OK',
+            visible: true,
+            closeModal: true,
+          },
+        },
+        dangerMode: true,
+      }).then(() => {
+        router.push('/login')
       })
+    }
   }, [runAgain])
 
   const finish = (data) => {
