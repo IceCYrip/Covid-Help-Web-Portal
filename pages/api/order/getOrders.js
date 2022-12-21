@@ -26,8 +26,8 @@ const handler = async (req, res) => {
               user = await Supplier.findById(obj.supplierId)
               response.push({
                 _id: obj._id,
-                suppName: user.fullName,
-                suppAddress: user.address,
+                fullName: user.fullName,
+                address: user.address,
                 mask: obj.mask,
                 remdevisir: obj.remdevisir,
                 oxygencylinder: obj.oxygencylinder,
@@ -35,7 +35,6 @@ const handler = async (req, res) => {
                 status: obj.status,
               })
             }
-            // res.status(200).send(response)
           } else {
             filtered = orders.filter((obj) => {
               return obj.supplierId == req.body._id
@@ -55,8 +54,8 @@ const handler = async (req, res) => {
               })
             }
           }
-
-          res.status(200).send(filtered)
+          // res.status(200).send(filtered)
+          res.status(200).send(response)
         }
       } else {
         res.status(400).json({ message: 'Something went wrong' })
