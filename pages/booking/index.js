@@ -231,9 +231,11 @@ export default function Home() {
               },
             },
             dangerMode: true,
+          }).then(() => {
+            setLoading(false)
+            setRunAgain(true)
+            router.push('/')
           })
-          setLoading(false)
-          setRunAgain(true)
         })
         .catch((error) => {
           console.log('error: ', error)

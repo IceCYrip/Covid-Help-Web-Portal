@@ -38,8 +38,7 @@ const SideBar = () => {
     },
     {
       name: userType === 'admin' ? 'REPORTS' : 'ACCOUNT',
-      // clickTo: `/account/${userType}`,
-      clickTo: userType === 'user' ? 'login' : `/account/${userType}`,
+      clickTo: `/account/${userType}`,
     },
   ]
 
@@ -69,6 +68,7 @@ const SideBar = () => {
             Welcome,
             <span
               className={styles.highlightedName}
+              style={{ textTransform: 'capitalize' }}
               onClick={() => {
                 router.push(`/${userType}`)
               }}
@@ -82,7 +82,25 @@ const SideBar = () => {
                 key={index}
                 className={styles.menuCard}
                 onClick={() => {
-                  router.push(menu.clickTo)
+                  if (!isLoggedIn) {
+                    sweetAlert({
+                      title: 'Login Not Found!',
+                      text: 'Please Login first',
+                      icon: 'warning',
+                      buttons: {
+                        confirm: {
+                          text: 'OK',
+                          visible: true,
+                          closeModal: true,
+                        },
+                      },
+                      dangerMode: true,
+                    }).then(() => {
+                      router.push('/login')
+                    })
+                  } else {
+                    router.push(menu.clickTo)
+                  }
                 }}
               >
                 <span>{menu.name}</span>

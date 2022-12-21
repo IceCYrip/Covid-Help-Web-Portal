@@ -74,7 +74,10 @@ const Index = () => {
         .then((res) => {
           reset(res.data)
           dispatch(login({ ...user, fullName: res.data.fullName }))
-          setLoading(false)
+
+          setTimeout(() => {
+            setLoading(false)
+          }, 2000)
         })
         .catch((error) => {
           console.log('error: ', error)
@@ -104,8 +107,8 @@ const Index = () => {
               id: i + 1,
               srNo: i + 1,
               _id: j._id,
-              suppName: j.suppName,
-              suppAddress: j.suppAddress,
+              fullName: j.fullName,
+              address: j.address,
               mask: j.mask,
               remdevisir: j.remdevisir,
               oxygencylinder: j.oxygencylinder,

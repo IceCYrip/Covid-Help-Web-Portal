@@ -216,7 +216,7 @@ const Customer = () => {
               </h1>
               <div
                 className={styles.rowGap}
-                style={{ marginTop: '5vh', marginLeft: '1vw' }}
+                style={{ marginTop: '4vh', marginLeft: '1vw' }}
               >
                 <TextField
                   sx={{ width: 230 }}
