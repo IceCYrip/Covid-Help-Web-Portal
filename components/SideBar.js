@@ -21,9 +21,10 @@ const SideBar = () => {
     if (userData.fullName) {
       setName(userData.fullName.split(' ')[0])
       setLoginState(isLoggedIn)
-    } else {
-      setName('User')
     }
+    // else {
+    //   setName('User')
+    // }
     if (userData.usertype) {
       setUserType(userData.usertype)
     } else {
@@ -65,15 +66,15 @@ const SideBar = () => {
 
         <div className={styles.menu}>
           <span className={styles.name}>
-            Welcome,
+            Hello,{' '}
             <span
               className={styles.highlightedName}
               style={{ textTransform: 'capitalize' }}
               onClick={() => {
-                router.push(`/${userType}`)
+                isLoggedIn ? router.push(`/${userType}`) : router.push(`/login`)
               }}
             >
-              {' ' + name}
+              {userData.fullName ? name : 'sign in'}
             </span>
           </span>
           {menu.map((menu, index) => {
@@ -82,7 +83,7 @@ const SideBar = () => {
                 key={index}
                 className={styles.menuCard}
                 onClick={() => {
-                  if (!isLoggedIn) {
+                  if (!isLoggedIn && menu.clickTo !== '/') {
                     sweetAlert({
                       title: 'Login Not Found!',
                       text: 'Please Login first',
@@ -121,7 +122,7 @@ const SideBar = () => {
             </div>
           </div>
         )}
-        {!loginState && (
+        {/* {!loginState && (
           <div className={styles.footer}>
             <div
               className={styles.logout}
@@ -132,7 +133,7 @@ const SideBar = () => {
               <span>LOGIN</span>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )

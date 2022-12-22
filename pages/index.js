@@ -145,8 +145,6 @@ export default function Home() {
   }
 
   const finish = (data) => {
-    setDoctorModal(false)
-
     const bodyForApi = { ...data, _id: ID }
 
     axios
@@ -167,6 +165,7 @@ export default function Home() {
             dangerMode: true,
           })
 
+          setDoctorModal(false)
           setRunAgain(true)
         }
       })
@@ -231,9 +230,35 @@ export default function Home() {
                       helperText={errors?.contact && errors.contact.message}
                     />
                   </div>
-                  <button className={styles.customButton} type="submit">
-                    Update
-                  </button>
+                  <div
+                    style={{
+                      display: 'flex',
+                      marginTop: '1vh',
+                      width: '100%',
+                      justifyContent: 'flex-end',
+                    }}
+                  >
+                    <button
+                      className={styles.customButton}
+                      onClick={() => {
+                        setDoctorModal(false)
+                      }}
+                    >
+                      {/* Cancel */}
+                      cancel
+                    </button>
+                    <button
+                      className={styles.customButton}
+                      style={{
+                        marginLeft: '2vw',
+                        textTransform: 'uppercase',
+                        fontFamily: 'bold',
+                      }}
+                      type="submit"
+                    >
+                      Update
+                    </button>
+                  </div>
                 </div>
               </form>
             </Modal>

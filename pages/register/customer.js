@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import styles from '../../styles/pages.module.css'
 import SideBar from '../../components/SideBar'
 import Loader from '../../components/Loader'
+import validator from '../../components/validator'
 import {
   Button,
   FormControl,
@@ -15,7 +16,7 @@ import {
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import sweetalert from 'sweetalert'
+import swal from 'sweetalert'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { login } from '../../redux/slices/UserSlice'
@@ -53,52 +54,7 @@ const Customer = () => {
   })
 
   const finish = (data) => {
-    if (!data.uname.includes('.') && !data.uname.includes('@')) {
-      sweetAlert({
-        title: 'Incorrect E-mail',
-        text: 'Please enter a valid e-mail',
-        icon: 'error',
-        buttons: {
-          confirm: {
-            text: 'OK',
-            visible: true,
-            closeModal: true,
-          },
-        },
-        dangerMode: true,
-      })
-    } else if (data.password !== data.confirmPassword) {
-      sweetAlert({
-        title: 'Incorrect Password',
-        text: 'Passwords do not match. Please re-enter password',
-        icon: 'error',
-        buttons: {
-          confirm: {
-            text: 'OK',
-            visible: true,
-            closeModal: true,
-          },
-        },
-        dangerMode: true,
-      })
-    } else if (
-      data.password.includes(data.fullName.split(' ')[0]) &&
-      data.password.includes(data.fullName.split(' ')[1])
-    ) {
-      sweetAlert({
-        title: 'Easy Password',
-        text: 'Password cannot include name',
-        icon: 'warning',
-        buttons: {
-          confirm: {
-            text: 'OK',
-            visible: true,
-            closeModal: true,
-          },
-        },
-        dangerMode: true,
-      })
-    } else {
+    if (validator(data)) {
       const { confirmPassword, ...rest } = data
       const bodyForAPI = { ...rest }
 
@@ -115,7 +71,7 @@ const Customer = () => {
               )
               .then((res) => {
                 if (res.status === 201) {
-                  sweetAlert({
+                  swal({
                     title: 'Registration Successful',
                     text: 'Account created successfully',
                     icon: 'success',
@@ -143,7 +99,7 @@ const Customer = () => {
                       })
                       .catch((error) => {
                         console.log('error: ', error)
-                        sweetAlert({
+                        swal({
                           title: 'Error',
                           text: 'Something went wrong',
                           icon: 'error',
@@ -161,7 +117,7 @@ const Customer = () => {
                 }
               })
               .catch((error) => {
-                sweetAlert({
+                swal({
                   title: 'Error',
                   text: `${error}`,
                   icon: 'error',
@@ -178,7 +134,7 @@ const Customer = () => {
           }
         })
         .catch((error) => {
-          sweetAlert({
+          swal({
             title: `Error`,
             text: 'Username already exists',
             icon: 'error',

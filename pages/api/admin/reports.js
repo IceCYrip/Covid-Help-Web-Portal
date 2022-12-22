@@ -13,17 +13,6 @@ const handler = async (req, res) => {
         let suppliers = await Supplier.find()
         let orders = await Order.find()
 
-        //   let userCount = 0,
-        //     customerCount = 0,
-        //     supplierCount = 0,
-        //   maskCount = 0,
-        //   oxygenCylinderCount = 0,
-        //   remdevisirCount = 0,
-        //     orderCount = 0,
-        //   maskSold = 0,
-        //   oxygenCylinderSold = 0,
-        //   remdevisirSold = 0
-
         let usersReport = {
             customers: 0,
             suppliers: 0,

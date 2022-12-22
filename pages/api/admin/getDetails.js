@@ -12,7 +12,7 @@ const handler = async (req, res) => {
           userType: 'admin',
         })
       } else {
-        res.status(400).send('Something went Wrong')
+        res.status(403).send('Something went Wrong')
       }
     } catch (error) {
       console.error('Error: ', error.message)

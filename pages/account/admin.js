@@ -13,6 +13,7 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { Button, TextField } from '@mui/material'
 import { login } from '../../redux/slices/UserSlice'
+import router from 'next/router'
 
 const Index = () => {
   const [Loading, setLoading] = useState(true)
@@ -39,61 +40,78 @@ const Index = () => {
   useEffect(() => {
     setRunAgain(false)
     if (user) {
-      //Get Admin Details
-      axios
-        .post(
-          `${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/getDetails`,
-          {
-            _id: user._id,
-          }
-        )
-        .then((res) => {
-          reset(res.data)
-          dispatch(login({ ...user, fullName: res.data.fullName }))
-          setLoading(false)
-        })
-        .catch((error) => {
-          console.log('error: ', error)
-          sweetAlert({
-            title: 'ERROR!',
-            text: `${error}`,
-            icon: 'error',
-            buttons: {
-              confirm: {
-                text: 'OK',
-                visible: true,
-                closeModal: true,
-              },
+      if (user.usertype !== 'admin') {
+        router.push('/login')
+        sweetAlert({
+          title: 'ERROR!',
+          text: `Access Forbidden`,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'OK',
+              visible: true,
+              closeModal: true,
             },
-            dangerMode: true,
-          })
+          },
+          dangerMode: true,
         })
+      } else {
+        //Get Admin Details
+        axios
+          .post(
+            `${process.env.NEXT_PUBLIC_HOST}/api/${user.usertype}/getDetails`,
+            {
+              _id: user._id,
+            }
+          )
+          .then((res) => {
+            reset(res.data)
+            dispatch(login({ ...user, fullName: res.data.fullName }))
+            setLoading(false)
+          })
+          .catch((error) => {
+            console.log('error: ', error)
+            sweetAlert({
+              title: 'ERROR!',
+              text: `${error}`,
+              icon: 'error',
+              buttons: {
+                confirm: {
+                  text: 'OK',
+                  visible: true,
+                  closeModal: true,
+                },
+              },
+              dangerMode: true,
+            })
+          })
 
-      //Get Reports
-      axios
-        .post(`${process.env.NEXT_PUBLIC_HOST}/api/admin/reports`, {
-          _id: user._id,
-        })
-        .then((res) => {
-          setReports(res.data)
-          setLoading(false)
-        })
-        .catch((error) => {
-          console.log('error: ', error)
-          sweetAlert({
-            title: 'ERROR!',
-            text: `${error}`,
-            icon: 'error',
-            buttons: {
-              confirm: {
-                text: 'OK',
-                visible: true,
-                closeModal: true,
-              },
-            },
-            dangerMode: true,
+        //Get Reports
+        axios
+          .post(`${process.env.NEXT_PUBLIC_HOST}/api/admin/reports`, {
+            _id: user._id,
           })
-        })
+          .then((res) => {
+            setReports(res.data)
+            setLoading(false)
+          })
+          .catch((error) => {
+            console.log('error: ', error)
+            sweetAlert({
+              title: 'ERROR!',
+              text: `${error}`,
+              icon: 'error',
+              buttons: {
+                confirm: {
+                  text: 'OK',
+                  visible: true,
+                  closeModal: true,
+                },
+              },
+              dangerMode: true,
+            })
+          })
+      }
     } else {
       sweetAlert({
         title: 'Login Not Found!',

@@ -17,9 +17,11 @@ const Loader = () => {
         backgroundColor: 'rgba(0, 0, 0, 0.20)',
       }}
     >
-      <Image src={loader} alt="Loader" priority height={85} width={85} />
+      <Image src={loader} alt="Loader" priority height={60} width={60} />
     </div>
   )
 }
 
 export default Loader
+
+// https://chwp.vercel.app
