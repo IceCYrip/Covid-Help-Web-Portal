@@ -35,6 +35,8 @@ const Index = () => {
   const [runAgain, setRunAgain] = useState(false)
   const [showOrdersSection, setShowOrdersSection] = useState(false)
   const [orders, setOrders] = useState([])
+  const [userDetails, setUserDetails] = useState({})
+
   // @ts-ignore
   const user = useSelector((state) => state.user.user)
   const dispatch = useDispatch()
@@ -72,12 +74,11 @@ const Index = () => {
           }
         )
         .then((res) => {
-          reset(res.data)
+          // reset(res.data)
+          setUserDetails(res.data)
           dispatch(login({ ...user, fullName: res.data.fullName }))
 
-          setTimeout(() => {
-            setLoading(false)
-          }, 2000)
+          setLoading(false)
         })
         .catch((error) => {
           console.log('error: ', error)
@@ -116,6 +117,8 @@ const Index = () => {
               status: j.status,
             }))
           )
+          reset(userDetails)
+
           setLoading(false)
         })
         .catch((error) => {
