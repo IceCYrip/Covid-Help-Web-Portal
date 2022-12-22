@@ -23,5 +23,3 @@ const Loader = () => {
 }
 
 export default Loader
-
-// https://chwp.vercel.app
