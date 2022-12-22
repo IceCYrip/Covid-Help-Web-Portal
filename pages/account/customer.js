@@ -74,8 +74,7 @@ const Index = () => {
           }
         )
         .then((res) => {
-          // reset(res.data)
-          setUserDetails(res.data)
+          reset(res.data)
           dispatch(login({ ...user, fullName: res.data.fullName }))
 
           setLoading(false)
@@ -117,8 +116,6 @@ const Index = () => {
               status: j.status,
             }))
           )
-          reset(userDetails)
-
           setLoading(false)
         })
         .catch((error) => {
