@@ -219,7 +219,7 @@ const Index = () => {
       headerName: (
         <Image
           src={maskSVG}
-          alt="Loader"
+          alt='Loader'
           priority
           height={35}
           width={35}
@@ -238,7 +238,7 @@ const Index = () => {
       headerName: (
         <Image
           src={o2SVG}
-          alt="Loader"
+          alt='Loader'
           priority
           height={48}
           width={48}
@@ -257,7 +257,7 @@ const Index = () => {
       headerName: (
         <Image
           src={remdevisirSVG}
-          alt="Loader"
+          alt='Loader'
           priority
           height={40}
           width={40}
@@ -295,8 +295,8 @@ const Index = () => {
             {params.row.status !== 'Delivered' &&
               params.row.status !== 'Cancelled' && (
                 <Button
-                  variant="contained"
-                  color="error"
+                  variant='contained'
+                  color='error'
                   sx={{
                     backgroundColor: '#F92303',
                     width: 120,
@@ -388,8 +388,8 @@ const Index = () => {
                   <div className={styles.rowGap}>
                     <TextField
                       sx={{ width: 300 }}
-                      label="Company Name"
-                      variant="standard"
+                      label='Company Name'
+                      variant='standard'
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('compName')}
                       error={!!errors.compName}
@@ -397,8 +397,8 @@ const Index = () => {
                     />
                     <TextField
                       sx={{ width: 300 }}
-                      label="Supplier Name"
-                      variant="standard"
+                      label='Supplier Name'
+                      variant='standard'
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('fullName')}
                       error={!!errors.fullName}
@@ -406,8 +406,8 @@ const Index = () => {
                     />
                     <TextField
                       sx={{ width: 300 }}
-                      label="Contact"
-                      variant="standard"
+                      label='Contact'
+                      variant='standard'
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('contact')}
                       error={!!errors.contact}
@@ -417,8 +417,8 @@ const Index = () => {
                   <div className={styles.rowGap}>
                     <TextField
                       sx={{ width: 300 }}
-                      label="Pincode"
-                      variant="standard"
+                      label='Pincode'
+                      variant='standard'
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('pincode')}
                       error={!!errors.pincode}
@@ -433,18 +433,18 @@ const Index = () => {
                       error={!!errors.area}
                       helperText={errors?.area && errors.area.message}
                     /> */}
-                    <FormControl variant="standard" error={!!errors.area}>
+                    <FormControl variant='standard' error={!!errors.area}>
                       <InputLabel>Area</InputLabel>
                       <Controller
                         render={({ field }) => (
                           <Select
                             sx={{ width: 230 }}
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
+                            labelId='demo-simple-select-standard-label'
+                            id='demo-simple-select-standard'
                             // value={field.value}
                             value={field.value}
                             onChange={(value) => field.onChange(value)}
-                            label="area"
+                            label='area'
                           >
                             {/* <MenuItem value={'Raigad'}>Raigad</MenuItem>
                         <MenuItem value={'Pen'}>Pen</MenuItem> */}
@@ -459,9 +459,9 @@ const Index = () => {
                             </MenuItem>
                           </Select>
                         )}
-                        name="area"
+                        name='area'
                         control={control}
-                        defaultValue=""
+                        defaultValue=''
                       />
                       <FormHelperText>
                         {errors?.area ? errors.area.message : null}
@@ -469,8 +469,8 @@ const Index = () => {
                     </FormControl>
                     <TextField
                       sx={{ width: 300 }}
-                      label="Address"
-                      variant="standard"
+                      label='Address'
+                      variant='standard'
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('address')}
                       error={!!errors.address}
@@ -480,31 +480,31 @@ const Index = () => {
                   <div className={styles.rowGap}>
                     <TextField
                       sx={{ width: 300 }}
-                      label="Username"
-                      variant="standard"
+                      label='Username'
+                      variant='standard'
                       disabled
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('uname')}
                     />
                     <TextField
                       sx={{ width: 300 }}
-                      label="UPI"
-                      variant="standard"
+                      label='UPI'
+                      variant='standard'
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('upi')}
                       error={!!errors.upi}
                       helperText={errors?.upi && errors.upi.message}
                     />
                   </div>
-                  <h2 style={{ textAlign: 'center', marginTop: '8vh' }}>
+                  <h2 style={{ textAlign: 'center', marginTop: '5vh' }}>
                     STOCK
                   </h2>
                   <div className={styles.rowGap}>
                     <TextField
                       sx={{ width: 300 }}
-                      label="Mask(s)"
-                      type="number"
-                      variant="standard"
+                      label='Mask(s)'
+                      type='number'
+                      variant='standard'
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('mask')}
                       error={!!errors.mask}
@@ -512,9 +512,9 @@ const Index = () => {
                     />
                     <TextField
                       sx={{ width: 300 }}
-                      label="Oxygen Cylinder(s)"
-                      type="number"
-                      variant="standard"
+                      label='Oxygen Cylinder(s)'
+                      type='number'
+                      variant='standard'
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('oxygencylinder')}
                       error={!!errors.oxygencylinder}
@@ -525,9 +525,9 @@ const Index = () => {
 
                     <TextField
                       sx={{ width: 300 }}
-                      label="Remdevisir(s)"
-                      type="number"
-                      variant="standard"
+                      label='Remdevisir(s)'
+                      type='number'
+                      variant='standard'
                       InputLabelProps={{ shrink: !Loading }}
                       {...register('remdevisir')}
                       error={!!errors.remdevisir}
@@ -539,26 +539,26 @@ const Index = () => {
 
                   <div className={styles.Button}>
                     <Button
-                      variant="contained"
-                      color="error"
+                      variant='contained'
+                      color='error'
                       sx={{
                         backgroundColor: '#F92303',
-                        marginTop: '6vh',
+                        marginTop: '3vh',
                         // marginBottom: '2vh',
                         width: 150,
                         height: 50,
                         fontSize: 'larger',
                         borderRadius: '15px',
                       }}
-                      type="submit"
+                      type='submit'
                     >
                       Save
                     </Button>
                   </div>
                   <div className={styles.Button}>
                     <Button
-                      variant="contained"
-                      color="error"
+                      variant='contained'
+                      color='error'
                       sx={{
                         backgroundColor: '#F92303',
                         marginTop: '2vh',
@@ -613,8 +613,8 @@ const Index = () => {
                   />
                   <div className={styles.Button}>
                     <Button
-                      variant="contained"
-                      color="error"
+                      variant='contained'
+                      color='error'
                       sx={{
                         backgroundColor: '#F92303',
                         marginTop: '5vh',
