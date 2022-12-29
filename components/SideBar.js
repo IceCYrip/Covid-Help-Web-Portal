@@ -122,18 +122,6 @@ const SideBar = () => {
             </div>
           </div>
         )}
-        {/* {!loginState && (
-          <div className={styles.footer}>
-            <div
-              className={styles.logout}
-              onClick={() => {
-                router.push('/login')
-              }}
-            >
-              <span>LOGIN</span>
-            </div>
-          </div>
-        )} */}
       </div>
     </div>
   )

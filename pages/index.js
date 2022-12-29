@@ -190,7 +190,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>CHWP - Dashboard</title>
+        <title>Covid Help Web Portal</title>
       </Head>
       <div className={styles.main}>
         <SideBar />
@@ -235,28 +235,32 @@ export default function Home() {
                       display: 'flex',
                       marginTop: '1vh',
                       width: '100%',
-                      justifyContent: 'flex-end',
+                      justifyContent: 'center',
+                      columnGap: 30,
                     }}
                   >
                     <button
                       className={styles.customButton}
-                      onClick={() => {
-                        setDoctorModal(false)
-                      }}
-                    >
-                      {/* Cancel */}
-                      cancel
-                    </button>
-                    <button
-                      className={styles.customButton}
                       style={{
-                        marginLeft: '2vw',
                         textTransform: 'uppercase',
                         fontFamily: 'bold',
                       }}
                       type="submit"
                     >
                       Update
+                    </button>
+                    <button
+                      className={styles.button2}
+                      style={{
+                        width: '6vw',
+                        height: '7vh',
+                        fontSize: 'large',
+                      }}
+                      onClick={() => {
+                        setDoctorModal(false)
+                      }}
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>

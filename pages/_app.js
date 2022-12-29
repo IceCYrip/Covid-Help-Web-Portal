@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import LoadingBar from 'react-top-loading-bar'
 import { useEffect, useState } from 'react'
 import router from 'next/router'
+import styles from '../styles/pages.module.css'
 
 function MyApp({ Component, pageProps }) {
   const [loadingProgress, setLoadingProgress] = useState(0)
@@ -35,6 +36,12 @@ function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
         </PersistGate>
       </Provider>
+      <div className={styles.appUnavailable}>
+        <h2 style={{ fontWeight: 'bold' }}>UNAVAILABLE!</h2>
+        <span>This website is unavailable on mobile as of now.</span>
+        <span>Please open this website on laptop. </span>
+        <span> Inconvenience caused is deeply regretted </span>
+      </div>
     </>
   )
 }

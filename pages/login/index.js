@@ -82,7 +82,7 @@ const Index = () => {
       <div className={styles.main}>
         <div className={styles.loginForm}>
           <div className={styles.header} style={{ textAlign: 'center' }}>
-            <Image src={logo} width={100} height={100} alt='Logo' />
+            <Image src={logo} width={100} height={100} alt="Logo" />
             <h1>Covid Help Web Portal</h1>
           </div>
           <h2 style={{ fontFamily: 'Alladin', textAlign: 'center' }}>Login</h2>
@@ -91,26 +91,26 @@ const Index = () => {
             <div className={styles.fields}>
               <TextField
                 sx={{ width: 250, marginBottom: 2 }}
-                label='Username'
-                variant='standard'
+                label="Username"
+                variant="standard"
                 {...register('uname')}
                 error={!!errors.uname}
                 helperText={errors?.uname && errors.uname.message}
               />
               <TextField
                 sx={{ width: 250, marginBottom: 4 }}
-                label='Password'
-                type='password'
-                variant='standard'
+                label="Password"
+                type="password"
+                variant="standard"
                 {...register('pwd')}
                 error={!!errors.pwd}
                 helperText={errors?.pwd && errors.pwd.message}
               />
               <Button
-                variant='contained'
-                color='error'
+                variant="contained"
+                color="error"
                 sx={{ backgroundColor: '#F92303' }}
-                type='submit'
+                type="submit"
               >
                 Login
                 {isLoggingIn && (
@@ -119,7 +119,7 @@ const Index = () => {
                     src={loaderSvg}
                     height={30}
                     width={30}
-                    alt='loader'
+                    alt="loader"
                     priority
                   />
                 )}
