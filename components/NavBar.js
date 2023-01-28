@@ -64,6 +64,7 @@ const FooterBar = () => {
         {menu.map((menu, index) => {
           return (
             <IconButton
+              key={index}
               onClick={() => {
                 // if (!isLoggedIn && menu.clickTo !== '/') {
                 if (!isLoggedIn) {
