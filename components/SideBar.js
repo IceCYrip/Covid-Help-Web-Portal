@@ -22,9 +22,6 @@ const SideBar = () => {
       setName(userData.fullName.split(' ')[0])
       setLoginState(isLoggedIn)
     }
-    // else {
-    //   setName('User')
-    // }
     if (userData.usertype) {
       setUserType(userData.usertype)
     } else {
@@ -71,7 +68,9 @@ const SideBar = () => {
               className={styles.highlightedName}
               style={{ textTransform: 'capitalize' }}
               onClick={() => {
-                isLoggedIn ? router.push(`/${userType}`) : router.push(`/login`)
+                isLoggedIn
+                  ? router.push(`/account/${userType}`)
+                  : router.push(`/login`)
               }}
             >
               {userData.fullName ? name : 'sign in'}
@@ -83,7 +82,8 @@ const SideBar = () => {
                 key={index}
                 className={styles.menuCard}
                 onClick={() => {
-                  if (!isLoggedIn && menu.clickTo !== '/') {
+                  // if (!isLoggedIn && menu.clickTo !== '/') {
+                  if (!isLoggedIn) {
                     sweetAlert({
                       title: 'Login Not Found!',
                       text: 'Please Login first',
