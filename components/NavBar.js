@@ -66,7 +66,6 @@ const FooterBar = () => {
             <IconButton
               key={index}
               onClick={() => {
-                // if (!isLoggedIn && menu.clickTo !== '/') {
                 if (!isLoggedIn) {
                   sweetAlert({
                     title: 'Login Not Found!',

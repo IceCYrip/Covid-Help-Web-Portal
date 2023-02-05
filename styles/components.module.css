@@ -178,7 +178,6 @@
     width: 100vw;
     /* margin-bottom: 2vh; */
     background-color: white;
-    border-bottom: 2px solid rgb(230, 230, 230);
     z-index: 2;
 
     display: flex;
@@ -195,10 +194,11 @@
     position: fixed;
     bottom: 0%;
     width: 100vw;
+    padding: 4px 0px;
     z-index: 2;
     /* background-color: whitesmoke; */
     background-color: white;
-    border-top: 1px solid grey;
+    /* border-top: 1px solid grey; */
 
     display: flex;
     align-items: center;
@@ -206,14 +206,14 @@
   }
 
   .icon {
-    width: 35px !important;
-    height: 35px !important;
+    width: 30px !important;
+    height: 30px !important;
     color: rgb(175, 175, 175);
   }
 
   .selectedIcon {
-    width: 35px !important;
-    height: 35px !important;
+    width: 30px !important;
+    height: 30px !important;
     /* color: rgb(252, 60, 60); */
     color: black;
   }

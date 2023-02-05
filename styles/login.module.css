@@ -1,45 +1,86 @@
-.main {
-  width: 96vw;
-  height: 93vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@media only screen and (min-width: 1100px) {
+  .main1 {
+    height: 93vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main2 {
+    display: none;
+  }
+
+  .loginForm {
+    width: max-content;
+    padding: 3vw 3vw;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .header > h1 {
+    font-family: 'Alladin';
+  }
+
+  .fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .register {
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .registerLinks {
+    color: #f92303;
+    font-weight: bold;
+  }
+
+  .registerLinks:hover {
+    cursor: pointer;
+    color: #c62828;
+    /* text-decoration: underline; */
+  }
 }
 
-.loginForm {
-  width: max-content;
-  padding: 3vw 3vw;
-  background-color: white;
-  border-radius: 30px;
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
-}
+@media only screen and (max-width: 1100px) {
+  .main1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-.header > h1 {
-  font-family: 'Alladin';
-}
+    height: 100vh;
+  }
 
-.fields {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
+  .fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+  }
 
-.register {
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .register {
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+  }
 
-.registerLinks {
-  color: #f92303;
-  font-weight: bold;
-}
+  .registerLinks {
+    color: #f92303;
+    font-weight: bold;
+  }
 
-.registerLinks:hover {
-  cursor: pointer;
-  color: #c62828;
-  /* text-decoration: underline; */
+  .registerLinks:hover {
+    cursor: pointer;
+    color: #c62828;
+  }
 }

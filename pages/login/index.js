@@ -79,7 +79,7 @@ const Index = () => {
       <Head>
         <title>CHWP - Login</title>
       </Head>
-      <div className={styles.main}>
+      <div className={styles.main1}>
         <div className={styles.loginForm}>
           <div className={styles.header} style={{ textAlign: 'center' }}>
             <Image src={logo} width={100} height={100} alt="Logo" />

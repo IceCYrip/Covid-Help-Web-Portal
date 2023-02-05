@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import router from 'next/router'
+import styles from '../../styles/pages.module.css'
 
 import {
   Button,
@@ -19,18 +21,17 @@ import { Controller, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import sweetAlert from 'sweetalert'
-import { login } from '../../redux/slices/UserSlice'
+import { login, logout } from '../../redux/slices/UserSlice'
 import maskSVG from '../../public/images/mask.svg'
 import o2SVG from '../../public/images/oxygen.svg'
 import remdevisirSVG from '../../public/images/remdevisir.svg'
-import Header from '../../components/Header'
 
-import styles from '../../styles/pages.module.css'
+import Header from '../../components/Header'
+import NavBar from '../../components/NavBar'
 import Loader from '../../components/Loader'
 import { DataGrid } from '@mui/x-data-grid'
 import Image from 'next/image'
-import { Delete } from '@mui/icons-material'
-import NavBar from '../../components/NavBar'
+import { Delete, Logout } from '@mui/icons-material'
 
 const Index = () => {
   const [Loading, setLoading] = useState(true)
@@ -666,6 +667,22 @@ const Index = () => {
                   >
                     Save
                   </Button>
+                </div>
+
+                <div
+                  style={{
+                    marginTop: '1.5vh',
+
+                    fontSize: 'large',
+                    fontFamily: 'Lato',
+                    color: 'red',
+                  }}
+                  onClick={() => {
+                    dispatch(logout())
+                    router.push('/login')
+                  }}
+                >
+                  Log Out
                 </div>
               </div>
             </div>
